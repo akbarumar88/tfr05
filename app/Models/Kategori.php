@@ -32,6 +32,6 @@ class Kategori
     public static function find($id)
     {
         $kategori = static::all();
-        return $kategori->first();
+        return $kategori->firstWhere('id', $id);
     }
 }

@@ -25,3 +25,12 @@ Route::get('/kategori', function ()
         'data' => Kategori::all()
     ]);
 });
+
+Route::get('/kategori/{id}', function ($id)
+{
+    return view('kategori.detail', [
+        'judul' => 'Kategori',
+        'data' => Kategori::find($id)
+    ]);
+});
+
