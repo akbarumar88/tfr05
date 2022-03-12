@@ -36,4 +36,5 @@ Route::get('/kategori/{id}', function ($id)
     ]);
 });
 
-Route::resource('admin/kategori', 'KategoriController');
+// Untuk data kategori tidak ada menu Detail, jadi method show dinonaktifkan
+Route::resource('admin/kategori', 'KategoriController')->except('show');
