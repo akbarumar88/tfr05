@@ -12,7 +12,7 @@
     }
 
     body {
-        padding: 16px;
+        padding: 32px;
     }
 
     th,
