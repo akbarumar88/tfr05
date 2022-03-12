@@ -5,33 +5,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kategori
+class Kategori extends Model
 {
-    // use HasFactory;
+    use HasFactory;
 
-    private static $kategori = [
-        [
-            'id' => 1,
-            'kategori' => 'Makanan'
-        ],
-        [
-            'id' => 2,
-            'kategori' => 'Minuman'
-        ],
-        [
-            'id' => 3,
-            'kategori' => 'Jajan'
-        ],
-    ];
+    protected $table = 'kategori';
 
-    public static function all()
-    {
-        return collect(self::$kategori);
-    }
+    // private static $kategori = [
+    //     [
+    //         'id' => 1,
+    //         'kategori' => 'Makanan'
+    //     ],
+    //     [
+    //         'id' => 2,
+    //         'kategori' => 'Minuman'
+    //     ],
+    //     [
+    //         'id' => 3,
+    //         'kategori' => 'Jajan'
+    //     ],
+    // ];
 
-    public static function find($id)
-    {
-        $kategori = static::all();
-        return $kategori->firstWhere('id', $id);
-    }
+    // public static function all()
+    // {
+    //     return collect(self::$kategori);
+    // }
+
+    // public static function find($id)
+    // {
+    //     $kategori = static::all();
+    //     return $kategori->firstWhere('id', $id);
+    // }
 }

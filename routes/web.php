@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\Kategori;
+use App\Http\Controllers\KategoriController;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +36,4 @@ Route::get('/kategori/{id}', function ($id)
     ]);
 });
 
+Route::resource('admin/kategori', 'KategoriController');
