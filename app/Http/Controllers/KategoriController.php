@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use PDF;
 
 class KategoriController extends Controller
 {
@@ -28,7 +29,7 @@ class KategoriController extends Controller
         $queryParams = request()->all();
         $builtQuery = http_build_query($queryParams);
         // dd($builtQuery);
-        
+
         return view('kategori/index', [
             'data' => $kategori,
             'params' => $builtQuery // Passing query params saat ini
@@ -120,5 +121,31 @@ class KategoriController extends Controller
         $kategori->delete();
 
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil dihapus');
+    }
+
+    /**
+     * Method untuk handle export PDF (PREVIEW)
+     */
+    public function previewPDF()
+    {
+        $kategori = Kategori::paginate(100)->withQueryString();
+        return view('kategori.exportpdf', [
+            'data' => $kategori,
+        ]);
+        // return $pdf->download('invoice.pdf');
+    }
+
+    /**
+     * Method untuk handle export PDF
+     */
+    public function exportPDF()
+    {
+        $kategori = Kategori::paginate(100)->withQueryString();
+        $pdf = PDF::loadView('kategori.exportpdf', [
+            'data' => $kategori,
+        ]);
+        return $pdf->stream();
+        // return $pdf->download('invoice.pdf');
+        // dd('masuk sini gan');
     }
 }

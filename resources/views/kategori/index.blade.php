@@ -15,6 +15,10 @@ $entri = request('entri', 10);
     <h3 class="mb-3">Data Kategori</h3>
 
     <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
+    <form action="/admin/kategori/exportpdf" class="d-inline" method="POST">
+        @csrf
+        <button type="submit" class="btn btn-warning"><i class="fa fa-print"></i> Export PDF</button>
+    </form>
 
     <div class="datatable-wrapper shadow-lg rounded mt-4">
         <div class="datatable-heading p-4 border-bottom">
@@ -39,7 +43,7 @@ $entri = request('entri', 10);
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="mb-0 mr-2">Pencarian: </p>
-                    <form action="/admin/kategori?{{ $params }}" method="get">
+                    <form action="/admin/kategori" method="get">
                         <input type="hidden" name="page" value="{{ request('page') }}">
                         <input type="hidden" name="entri" value="{{ request('entri') }}">
                         <input type="text" name="q" id="" class="form-control" value="{{ request('q') }}" />

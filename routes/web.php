@@ -38,3 +38,5 @@ Route::get('/', function () {
 
 // Untuk data kategori tidak ada menu Detail, jadi method show dinonaktifkan
 Route::resource('admin/kategori', 'KategoriController')->except('show');
+Route::post('admin/kategori/exportpdf', 'KategoriController@exportPDF');
+Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF');
