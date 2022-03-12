@@ -28,8 +28,8 @@
 
     #title {
         text-align: center;
-        margin-bottom: 12px;
-        margin-top: 12px;
+        margin-bottom: 16px;
+        margin-top: 32px;
     }
 
     .clearfix::after {

@@ -128,7 +128,12 @@ class KategoriController extends Controller
      */
     public function previewPDF()
     {
-        $kategori = Kategori::paginate(100)->withQueryString();
+        $cari = request('q');
+        if ($cari) {
+            $kategori = Kategori::where('kategori', 'like', "%$cari%")->get();
+        } else {
+            $kategori = Kategori::all();
+        }
         return view('kategori.exportpdf', [
             'data' => $kategori,
         ]);
@@ -140,7 +145,13 @@ class KategoriController extends Controller
      */
     public function exportPDF()
     {
-        $kategori = Kategori::paginate(100)->withQueryString();
+        $cari = request('q');
+        if ($cari) {
+            $kategori = Kategori::where('kategori', 'like', "%$cari%")->get();
+        } else {
+            $kategori = Kategori::all();
+        }
+
         $pdf = PDF::loadView('kategori.exportpdf', [
             'data' => $kategori,
         ]);
