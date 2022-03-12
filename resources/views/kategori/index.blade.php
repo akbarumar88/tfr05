@@ -28,7 +28,9 @@
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="mb-0 mr-2">Pencarian: </p>
-                    <input type="text" name="" id="" class="form-control" />
+                    <form action="" method="get">
+                        <input type="text" name="q" id="" class="form-control" value="{{request('q')}}"/>
+                    </form>
                 </div>
             </div>
 

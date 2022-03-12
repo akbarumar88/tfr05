@@ -14,8 +14,14 @@ class KategoriController extends Controller
      */
     public function index()
     {
+        $cari = request('q');
+        if ($cari) {
+            $kategori = Kategori::where('kategori', 'like', "%$cari%")->get();
+        } else {
+            $kategori = Kategori::all();
+        }
+        // dd($kategori);
         //
-        $kategori = Kategori::all();
         return view('kategori/index', [
             'data' => $kategori
         ]);
