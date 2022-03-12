@@ -20,21 +20,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/kategori', function ()
-{
-    return view('kategori.index', [
-        'judul' => 'Kategori',
-        'data' => Kategori::all()
-    ]);
-});
+// Route::get('/kategori', function ()
+// {
+//     return view('kategori.index', [
+//         'judul' => 'Kategori',
+//         'data' => Kategori::all()
+//     ]);
+// });
 
-Route::get('/kategori/{id}', function ($id)
-{
-    return view('kategori.detail', [
-        'judul' => 'Kategori',
-        'data' => Kategori::find($id)
-    ]);
-});
+// Route::get('/kategori/{id}', function ($id)
+// {
+//     return view('kategori.detail', [
+//         'judul' => 'Kategori',
+//         'data' => Kategori::find($id)
+//     ]);
+// });
 
 // Untuk data kategori tidak ada menu Detail, jadi method show dinonaktifkan
 Route::resource('admin/kategori', 'KategoriController')->except('show');

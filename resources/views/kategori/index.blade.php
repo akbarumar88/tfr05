@@ -1,3 +1,7 @@
+@php
+$entri = request('entri', 10);
+@endphp
+
 @extends('layout')
 
 @section('content')
@@ -7,6 +11,7 @@
         </div>
     @endif
 
+    {{-- {{dd($params)}} --}}
     <h3 class="mb-3">Data Kategori</h3>
 
     <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
@@ -20,16 +25,24 @@
             <div class="datatable-search-wrap d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
                     <p class="mb-0">Menampilkan</p>
-                    <select name="" id="" class="form-control py-0 px-2 mx-2">
-                        <option value="">10</option>
-                        <option value="">25</option>
-                    </select>
+
+                    <form action="/admin/kategori" class="mx-2">
+                        <input type="hidden" name="page" value="{{ request('page') }}">
+                        <input type="hidden" name="entri" value="{{ request('q') }}">
+                        <select onchange="this.form.submit()" name="entri" id="" class="form-control py-0 px-2">
+                            <option value="10" {{ $entri == 10 ? 'selected' : '' }}>10</option>
+                            <option value="25" {{ $entri == 25 ? 'selected' : '' }}>25</option>
+                        </select>
+                    </form>
+
                     <p class="mb-0">entri</p>
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="mb-0 mr-2">Pencarian: </p>
-                    <form action="" method="get">
-                        <input type="text" name="q" id="" class="form-control" value="{{request('q')}}"/>
+                    <form action="/admin/kategori?{{ $params }}" method="get">
+                        <input type="hidden" name="page" value="{{ request('page') }}">
+                        <input type="hidden" name="entri" value="{{ request('entri') }}">
+                        <input type="text" name="q" id="" class="form-control" value="{{ request('q') }}" />
                     </form>
                 </div>
             </div>
@@ -56,7 +69,8 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
+                                        <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')"
+                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
                                             Hapus</button>
                                     </form>
                                 </div>
@@ -65,6 +79,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            {{ $data->links() }}
         </div>
 
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class KategoriController extends Controller
 {
@@ -15,15 +16,22 @@ class KategoriController extends Controller
     public function index()
     {
         $cari = request('q');
+        $entri = request('entri', 10);
+
         if ($cari) {
-            $kategori = Kategori::where('kategori', 'like', "%$cari%")->get();
+            $kategori = Kategori::where('kategori', 'like', "%$cari%")->paginate($entri)->withQueryString();
         } else {
-            $kategori = Kategori::all();
+            $kategori = Kategori::paginate($entri)->withQueryString();
         }
         // dd($kategori);
         //
+        $queryParams = request()->all();
+        $builtQuery = http_build_query($queryParams);
+        // dd($builtQuery);
+        
         return view('kategori/index', [
-            'data' => $kategori
+            'data' => $kategori,
+            'params' => $builtQuery // Passing query params saat ini
         ]);
     }
 
@@ -50,7 +58,7 @@ class KategoriController extends Controller
         $kategori = new Kategori();
         $kategori->kategori = $request->input('kategori');
         $kategori->save();
-        
+
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
     }
 
@@ -94,7 +102,7 @@ class KategoriController extends Controller
         $kategori = Kategori::find($id);
         $kategori->kategori = $request->input('kategori');
         $kategori->save();
-        
+
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil diubah');
     }
 
