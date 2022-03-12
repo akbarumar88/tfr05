@@ -101,5 +101,10 @@ class KategoriController extends Controller
     public function destroy($id)
     {
         //
+        // dd('masuk ke destroy gan', $id);
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+
+        return redirect('/admin/kategori')->with('success', 'Kategori berhasil dihapus');
     }
 }

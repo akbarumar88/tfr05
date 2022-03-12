@@ -1,16 +1,15 @@
 @extends('layout')
 
 @section('content')
-
     @if (session()->has('success'))
         <div class="alert alert-success">
-            {{session('success')}}
+            {{ session('success') }}
         </div>
     @endif
 
     <h3 class="mb-3">Data Kategori</h3>
 
-    <button class="btn btn-success"><i class="fa fa-plus"></i> Tambah</button>
+    <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
 
     <div class="datatable-wrapper shadow-lg rounded mt-4">
         <div class="datatable-heading p-4 border-bottom">
@@ -28,7 +27,7 @@
                     <p class="mb-0">entri</p>
                 </div>
                 <div class="d-flex align-items-center">
-                   <p class="mb-0 mr-2">Pencarian: </p>
+                    <p class="mb-0 mr-2">Pencarian: </p>
                     <input type="text" name="" id="" class="form-control" />
                 </div>
             </div>
@@ -48,9 +47,15 @@
                             <td>{{ $kategori['kategori'] }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="/admin/kategori/{{$kategori->id}}/edit" class="btn btn-warning mr-2"><i class="fa fa-edit"></i> Edit</a>
-                                    <form action="">
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</button>
+                                    <a href="/admin/kategori/{{ $kategori->id }}/edit" class="btn btn-warning mr-2"><i
+                                            class="fa fa-edit"></i> Edit</a>
+
+                                    <form action="/admin/kategori/{{ $kategori->id }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')" type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
+                                            Hapus</button>
                                     </form>
                                 </div>
                             </td>
