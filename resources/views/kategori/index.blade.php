@@ -1,6 +1,13 @@
 @extends('layout')
 
 @section('content')
+
+    @if (session()->has('success'))
+        <div class="alert alert-success">
+            {{session('success')}}
+        </div>
+    @endif
+
     <h3 class="mb-3">Data Kategori</h3>
 
     <button class="btn btn-success"><i class="fa fa-plus"></i> Tambah</button>
@@ -35,13 +42,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $i => $item)
+                    @foreach ($data as $i => $kategori)
                         <tr>
                             <th scope="row">{{ $i + 1 }}</th>
-                            <td>{{ $item['kategori'] }}</td>
+                            <td>{{ $kategori['kategori'] }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="#" class="btn btn-warning mr-2"><i class="fa fa-edit"></i> Edit</a>
+                                    <a href="/admin/kategori/{{$kategori->id}}/edit" class="btn btn-warning mr-2"><i class="fa fa-edit"></i> Edit</a>
                                     <form action="">
                                         <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus</button>
                                     </form>

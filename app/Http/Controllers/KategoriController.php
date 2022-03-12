@@ -41,7 +41,11 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         //
-        dd('masuk sini gan');
+        $kategori = new Kategori();
+        $kategori->kategori = $request->input('kategori');
+        $kategori->save();
+        
+        return redirect('/admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
     }
 
     /**
@@ -81,6 +85,11 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $kategori = Kategori::find($id);
+        $kategori->kategori = $request->input('kategori');
+        $kategori->save();
+        
+        return redirect('/admin/kategori')->with('success', 'Kategori berhasil diubah');
     }
 
     /**
