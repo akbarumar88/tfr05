@@ -195,7 +195,8 @@
             <div class="row align-items-center">
                 <div class="col-md-8 col-md-offset-2">
                     <!-- login_wrapper -->
-                    <form class="login_wrapper" method="POST">
+                    <form class="login_wrapper" method="POST" action="/login">
+                        @csrf
                         {{-- <div class="row">
                             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6"> <a href="#"
                                     class="btn btn-primary facebook"> <span>Login with Facebook</span> <i
@@ -206,15 +207,21 @@
                         </div> --}}
                         <h2>Login</h2>
                         <div class="formsix-pos">
-                            <div class="form-group i-email">
-                                <input type="text" class="form-control" required="" id="email2"
-                                    placeholder="Username *">
+                            <div class="form-group i-username">
+                                <input type="text" class="form-control @error('username') is-invalid @enderror" required="" id="username2"
+                                    placeholder="Username *" name="username" value="{{ old('username') }}">
+                                @error('username')
+                                    <div class="invalid-feedback mt-2">{{$message}}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="formsix-e">
                             <div class="form-group i-password">
-                                <input type="password" class="form-control" required="" id="password2"
-                                    placeholder="Password *">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" required="" id="password2"
+                                    placeholder="Password *" name="password">
+                                @error('password')
+                                    <div class="invalid-feedback mt-2">{{$message}}</div>
+                                @enderror
                             </div>
                         </div>
                         {{-- <div class="login_remember_box"> <label class="control control--checkbox">Remember me <input
