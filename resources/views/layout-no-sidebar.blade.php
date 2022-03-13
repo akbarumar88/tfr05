@@ -29,15 +29,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                         aria-haspopup="true" aria-expanded="false">Genre</a>
-                    {{-- <div class="dropdown-menu">
-                        <div class="" style="display:flex;flex-wrap:wrap;width:600px">
-                            <?php // foreach ($genres as $genre) : ?>
-                            <a style="width:25%" class="dropdown-item"
-                                href="<?= // base_url('site/search_genre/' . $genre['id']) ?>"><?= // $genre['genre'] ?></a>
-                            <?php // endforeach; ?>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                    </div> --}}
                 </li>
 
                 <li class="nav-item">
@@ -45,8 +36,7 @@
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" action="<?= '' ?>" style="position: relative;"
-                autocomplete="off">
+            <form class="form-inline my-2 my-lg-0" action="<?= '' ?>" style="position: relative;" autocomplete="off">
                 <input class="form-control mr-sm-2" type="text" id="searchbar" name="q" placeholder="Search"
                     value="<?= !empty($_GET['q']) ? $_GET['q'] : '' ?>" required>
                 <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
@@ -136,28 +126,18 @@
     </script>
     <!-- Axios CDN -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
     <!-- Opening Tag Container -->
-    <div id="main-wrap" class="d-flex">
-        <div id="sidebar" class="p-3" style="flex:0.15">
-            <div class="sidebar-section-group border-top border-bottom border-light">
-                <p class="sidebar-section-category mb-2">MASTER</p>
-                <a href="/admin/kategori"><p class="sidebar-item mb-0">Kategori</p></a>
-            </div>
-
-            {{-- <p class="text-white">Test Sidebar.</p> --}}
-        </div>
-        <div id="main" style="flex:0.85">
-            <div class="container pt-5 pb-5">
-                @yield('content')
-            </div>
-
-            {{-- Footer Content --}}
-            <div id="footer" class="bg-light pt-4 pb-4">
-                <h6 class="text-dark text-center m-0">Copyright <?= date('Y') ?> POS.</h6>
-            </div>
-        </div>
+    <div class="container pt-5 pb-5">
+        @yield('content')
     </div>
-    <!-- Closing Tag Container -->    
+
+    {{-- Footer Content --}}
+    <div id="footer" class="bg-light pt-4 pb-4">
+        <h6 class="text-dark text-center m-0">Copyright <?= date('Y') ?> POS.</h6>
+    </div>
+    <!-- Closing Tag Container -->
 
     <script src="<?= asset('front/js/popper.min.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap.bundle.min.js') ?>"></script>
