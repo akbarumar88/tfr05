@@ -141,7 +141,8 @@
         <div id="sidebar" class="p-3" style="flex:0.15">
             <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">MASTER</p>
-                <a href="/admin/kategori"><p class="sidebar-item mb-0">Kategori</p></a>
+                <a href="<?= url('') ?>/admin/kategori"><p class="sidebar-item mb-0">Kategori</p></a>
+                <a href="<?= url('') ?>/admin/barang"><p class="sidebar-item mb-0">Barang</p></a>
             </div>
 
             {{-- <p class="text-white">Test Sidebar.</p> --}}
