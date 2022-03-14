@@ -39,13 +39,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
 
+// Dashboard Admin
+Route::get('admin', 'AdminController@index')->middleware('cek_login');
+
 // Kategori
 // Untuk data kategori tidak ada menu Detail, jadi method show dinonaktifkan
-Route::resource('admin/kategori', 'KategoriController')->except('show');
-Route::post('admin/kategori/exportpdf', 'KategoriController@exportPDF');
-Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF');
+Route::resource('admin/kategori', 'KategoriController')->except('show')->middleware('cek_login');
+Route::post('admin/kategori/exportpdf', 'KategoriController@exportPDF')->middleware('cek_login');
+Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF')->middleware('cek_login');
 
 // Barang
-Route::resource('admin/barang', 'BarangController');
-Route::post('admin/barang/exportpdf', 'BarangController@exportPDF');
-Route::get('admin/barang/previewpdf', 'BarangController@previewPDF');
+Route::resource('admin/barang', 'BarangController')->middleware('cek_login');
+Route::post('admin/barang/exportpdf', 'BarangController@exportPDF')->middleware('cek_login');
+Route::get('admin/barang/previewpdf', 'BarangController@previewPDF')->middleware('cek_login');
