@@ -70,7 +70,11 @@
                     <a href="#" class="nav-link ">{{auth()->user()->nama}}</a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= '#' ?>" class="nav-link">Logout</a>
+                    <form action="/logout" class="d-inline" method="POST" id="form-logout">
+                        @csrf
+                        {{-- <button type="submit" class="nav-link">Logout</button> --}}
+                        <a href="#" onclick="logout()" class="nav-link">Logout</a>
+                    </form>
                 </li>
                 {{-- <li class="nav-item">
                     <a href="<?= '#' ?>" class="nav-link">Histori</a>
@@ -90,6 +94,10 @@
     </nav>
 
     <script>
+        function logout() {
+            $('#form-logout').submit();
+        }
+
         $(document).ready(function() {
             $('#searchbar').on('input', function(e) {
                 // console.log('onChange gan', e.target.value)

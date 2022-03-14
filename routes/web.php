@@ -34,10 +34,10 @@ use Illuminate\Support\Facades\Route;
 //     ]);
 // });
 
-// Login
-
+// Otentikasi
 Route::get('/', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
+Route::post('/logout', 'LoginController@logout');
 
 // Dashboard Admin
 Route::get('admin', 'AdminController@index')->middleware('cek_login');

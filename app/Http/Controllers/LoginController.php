@@ -44,4 +44,17 @@ class LoginController extends Controller
             'password' => 'Password yang anda inputkan salah.'
         ]);
     }
+
+    /**
+     * Fungsi untuk handle logout user.
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/'); // Arahkan ke halaman login.
+    }
 }
