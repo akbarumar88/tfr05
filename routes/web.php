@@ -2,6 +2,7 @@
 
 use App\Models\Kategori;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
@@ -33,9 +34,16 @@ use Illuminate\Support\Facades\Route;
 //     ]);
 // });
 
+// Login
+
 Route::get('/', 'LoginController@index');
 Route::post('/login', 'LoginController@login');
+
+// Kategori
 // Untuk data kategori tidak ada menu Detail, jadi method show dinonaktifkan
 Route::resource('admin/kategori', 'KategoriController')->except('show');
 Route::post('admin/kategori/exportpdf', 'KategoriController@exportPDF');
 Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF');
+
+// Barang
+Route::resource('admin/barang', 'BarangController');
