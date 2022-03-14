@@ -47,3 +47,5 @@ Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF');
 
 // Barang
 Route::resource('admin/barang', 'BarangController');
+Route::post('admin/barang/exportpdf', 'BarangController@exportPDF');
+Route::get('admin/barang/previewpdf', 'BarangController@previewPDF');

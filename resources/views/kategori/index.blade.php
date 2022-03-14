@@ -15,7 +15,7 @@ $entri = request('entri', 10);
     <h3 class="mb-3">Data Kategori</h3>
 
     <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
-    <form action="/admin/kategori/exportpdf" class="d-inline" method="POST">
+    <form action="{{ url('') }}/admin/kategori/exportpdf" class="d-inline" method="POST">
         @csrf
         <input type="hidden" name="q" value="{{request('q')}}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-print"></i> Export PDF</button>

@@ -130,37 +130,37 @@ class BarangController extends Controller
     /**
      * Method untuk handle export PDF (PREVIEW)
      */
-    // public function previewPDF()
-    // {
-    //     $cari = request('q');
-    //     if ($cari) {
-    //         $barang = Barang::where('barang', 'like', "%$cari%")->get();
-    //     } else {
-    //         $barang = Barang::all();
-    //     }
-    //     return view('barang.exportpdf', [
-    //         'data' => $barang,
-    //     ]);
-    //     // return $pdf->download('invoice.pdf');
-    // }
+    public function previewPDF()
+    {
+        $cari = request('q');
+        if ($cari) {
+            $barang = Barang::where('nama', 'like', "%$cari%")->get();
+        } else {
+            $barang = Barang::all();
+        }
+        return view('barang.exportpdf', [
+            'data' => $barang,
+        ]);
+        // return $pdf->download('invoice.pdf');
+    }
 
     /**
      * Method untuk handle export PDF
      */
-    // public function exportPDF()
-    // {
-    //     $cari = request('q');
-    //     if ($cari) {
-    //         $barang = Barang::where('barang', 'like', "%$cari%")->get();
-    //     } else {
-    //         $barang = Barang::all();
-    //     }
+    public function exportPDF()
+    {
+        $cari = request('q');
+        if ($cari) {
+            $barang = Barang::where('barang', 'like', "%$cari%")->get();
+        } else {
+            $barang = Barang::all();
+        }
 
-    //     $pdf = PDF::loadView('barang.exportpdf', [
-    //         'data' => $barang,
-    //     ]);
-    //     return $pdf->stream();
-    //     // return $pdf->download('invoice.pdf');
-    //     // dd('masuk sini gan');
-    // }
+        $pdf = PDF::loadView('barang.exportpdf', [
+            'data' => $barang,
+        ]);
+        return $pdf->stream();
+        // return $pdf->download('invoice.pdf');
+        // dd('masuk sini gan');
+    }
 }
