@@ -21,6 +21,12 @@
 .sidebar-item {
     color: white;
 }
+.menu-icon {
+    color: white;
+}
+a.active p, a.active .menu-icon {
+    font-weight: bold;
+}
 
 /* Data Table */
 .datatable-heading {

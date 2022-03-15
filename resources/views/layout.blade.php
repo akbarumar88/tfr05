@@ -26,27 +26,12 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
 
-                {{-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="true" aria-expanded="false">Genre</a> --}}
-                    {{-- <div class="dropdown-menu">
-                        <div class="" style="display:flex;flex-wrap:wrap;width:600px">
-                            <?php // foreach ($genres as $genre) : ?>
-                            <a style="width:25%" class="dropdown-item"
-                                href="<?= // base_url('site/search_genre/' . $genre['id']) ?>"><?= // $genre['genre'] ?></a>
-                            <?php // endforeach; ?>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                    </div> --}}
-                {{-- </li> --}}
-
                 <li class="nav-item">
                     <a class="nav-link" href="<?= '' ?>">Data Indodax</a>
                 </li>
             </ul>
 
-            <form class="form-inline my-2 my-lg-0" action="<?= '' ?>" style="position: relative;"
-                autocomplete="off">
+            <form class="form-inline my-2 my-lg-0" action="<?= '' ?>" style="position: relative;" autocomplete="off">
                 <input class="form-control mr-sm-2" type="text" id="searchbar" name="q" placeholder="Search"
                     value="<?= !empty($_GET['q']) ? $_GET['q'] : '' ?>" required>
                 <button class="btn btn-danger my-2 my-sm-0" type="submit">Search</button>
@@ -67,7 +52,7 @@
                 </li>
                 <?php else : ?>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">{{auth()->user()->nama}}</a>
+                    <a href="#" class="nav-link ">{{ auth()->user()->nama }}</a>
                 </li>
                 <li class="nav-item">
                     <form action="/logout" class="d-inline" method="POST" id="form-logout">
@@ -148,9 +133,23 @@
     <div id="main-wrap" class="d-flex">
         <div id="sidebar" class="p-3" style="flex:0.15">
             <div class="sidebar-section-group border-top border-bottom border-light">
+                <p class="sidebar-section-category mb-2">DASHBOARD</p>
+                <a href="<?= url('') ?>/admin" class="d-block py-2 {{ Request::is('admin') ? 'active' : '' }}">
+                    <i class="fa fa-home menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Home</p>
+                </a>
+            </div>
+
+            <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">MASTER</p>
-                <a href="<?= url('') ?>/admin/kategori"><p class="sidebar-item mb-0">Kategori</p></a>
-                <a href="<?= url('') ?>/admin/barang"><p class="sidebar-item mb-0">Barang</p></a>
+                <a href="<?= url('') ?>/admin/kategori" class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                    <i class="fa fa-chart-bar menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Kategori</p>
+                </a>
+                <a href="<?= url('') ?>/admin/barang" class="d-block py-2 {{ Request::is('admin/barang') ? 'active' : '' }}">
+                    <i class="fa fa-briefcase menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Barang</p>
+                </a>
             </div>
 
             {{-- <p class="text-white">Test Sidebar.</p> --}}
@@ -166,7 +165,7 @@
             </div>
         </div>
     </div>
-    <!-- Closing Tag Container -->    
+    <!-- Closing Tag Container -->
 
     <script src="<?= asset('front/js/popper.min.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap.bundle.min.js') ?>"></script>
