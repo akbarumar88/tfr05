@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\BarangExport;
 use App\Models\Barang;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PDF;
@@ -22,11 +23,25 @@ class BarangController extends Controller
         $entri = request('entri', 10);
 
         if ($cari) {
-            $barang = barang::where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();
+            $barang = barang::select(
+                "barang.id",
+                "kategori.kategori as kategori",
+                "barang.nama",
+                "barang.harga",
+                "barang.created_at",
+                "barang.updated_at",
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();;
         } else {
-            $barang = barang::paginate($entri)->withQueryString();
+            $barang = barang::select(
+                "barang.id",
+                "kategori.kategori as kategori",
+                "barang.nama",
+                "barang.harga",
+                "barang.created_at",
+                "barang.updated_at",
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")->paginate($entri)->withQueryString();
         }
-        // dd($kategori);
+        // dd($barang);
         //
         $queryParams = request()->all();
         $builtQuery = http_build_query($queryParams);
@@ -45,8 +60,12 @@ class BarangController extends Controller
      */
     public function create()
     {
+        $kategori = Kategori::all();
+
         //
-        return view('barang.create', []);
+        return view('barang.create', [
+            'data' => $kategori,
+        ]);
     }
 
     /**a
@@ -59,7 +78,7 @@ class BarangController extends Controller
     {
         //
         $barang = new Barang();
-        $barang->idkategori = $request->input('idkategori');
+        $barang->idkategori = $request->input('kategori');
         $barang->nama = $request->input('nama');
         $barang->harga = $request->input('harga');
         $barang->save();
@@ -87,9 +106,11 @@ class BarangController extends Controller
     public function edit($id)
     {
         //
+        $kategori = Kategori::all();
         $barang = Barang::find($id);
         // dd($barang);
         return view('barang.edit', [
+            'kategori' => $kategori,
             'barang' => $barang
         ]);
     }
@@ -105,7 +126,7 @@ class BarangController extends Controller
     {
         //
         $barang = Barang::find($id);
-        $barang->idkategori = $request->input('idkategori');
+        $barang->idkategori = $request->input('kategori');
         $barang->nama = $request->input('nama');
         $barang->harga = $request->input('harga');
         $barang->save();

@@ -61,7 +61,7 @@ $entri = request('entri', 10);
                 <thead>
                     <tr>
                         <th scope="col">No.</th>
-                        <th scope="col">ID Kategori</th>
+                        <th scope="col">Kategori</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Harga</th>
                         <th scope="col">Aksi</th>
@@ -71,7 +71,7 @@ $entri = request('entri', 10);
                     @foreach ($data as $i => $barang)
                         <tr>
                             <th scope="row">{{ $i + 1 }}</th>
-                            <td>{{ $barang['idkategori'] }}</td>
+                            <td>{{ $barang['kategori'] }}</td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ $barang['harga'] }}</td>
                             <td>

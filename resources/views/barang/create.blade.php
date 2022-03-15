@@ -7,8 +7,12 @@
         @csrf
         <div class="form-group">
             <label for="idkategori">Kategori</label>
-            <input type="text" class="form-control" id="idkategori" aria-describedby="emailHelp" name="idkategori">
-            <small id="emailHelp" class="form-text text-muted">ID lategori barang yang hendak ditambahkan.</small>
+            <select class="form-control" name="kategori" id="kategori">
+                @foreach ($data as $i => $kategori)
+                <option value="{{ $kategori['id'] }}">{{ $kategori['kategori'] }}</option>
+                @endforeach
+            </select>
+            <small id="emailHelp" class="form-text text-muted">Kategori barang yang hendak ditambahkan.</small>
             <label for="nama">Nama</label>
             <input type="text" class="form-control" id="nama" aria-describedby="emailHelp" name="nama">
             <small id="emailHelp" class="form-text text-muted">Nama barang yang hendak ditambahkan.</small>

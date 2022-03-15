@@ -17,7 +17,7 @@
             @foreach ($data as $i => $barang)
                 <tr>
                     <td>{{ $i + 1 }}</td>
-                    <td>{{ $barang['idkategori'] }}</td>
+                    <td>{{ $barang['kategori'] }}</td>
                     <td>{{ $barang['nama'] }}</td>
                     <td>{{ $barang['harga'] }}</td>
                 </tr>
