@@ -174,10 +174,29 @@ class BarangController extends Controller
     {
         $cari = request('q');
         if ($cari) {
-            $barang = Barang::where('barang', 'like', "%$cari%")->get();
+            $barang = barang::select(
+                "barang.id",
+                "kategori.kategori as kategori",
+                "barang.nama",
+                "barang.harga",
+                "barang.created_at",
+                "barang.updated_at",
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->get();
         } else {
-            $barang = Barang::all();
+            $barang = barang::select(
+                "barang.id",
+                "kategori.kategori as kategori",
+                "barang.nama",
+                "barang.harga",
+                "barang.created_at",
+                "barang.updated_at",
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")->get();
         }
+        // if ($cari) {
+        //     $barang = Barang::where('barang', 'like', "%$cari%")->get();
+        // } else {
+        //     $barang = Barang::all();
+        // }
 
         $pdf = PDF::loadView('barang.exportpdf', [
             'data' => $barang,
