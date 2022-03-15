@@ -26,9 +26,9 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="<?= '' ?>">Data Indodax</a>
-                </li>
+                </li> --}}
             </ul>
 
             <form class="form-inline my-2 my-lg-0" action="<?= '' ?>" style="position: relative;" autocomplete="off">
@@ -142,11 +142,13 @@
 
             <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">MASTER</p>
-                <a href="<?= url('') ?>/admin/kategori" class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                <a href="<?= url('') ?>/admin/kategori"
+                    class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
                     <i class="fa fa-chart-bar menu-icon"></i>
                     <p class="sidebar-item mb-0 d-inline">Kategori</p>
                 </a>
-                <a href="<?= url('') ?>/admin/barang" class="d-block py-2 {{ Request::is('admin/barang') ? 'active' : '' }}">
+                <a href="<?= url('') ?>/admin/barang"
+                    class="d-block py-2 {{ Request::is('admin/barang') ? 'active' : '' }}">
                     <i class="fa fa-briefcase menu-icon"></i>
                     <p class="sidebar-item mb-0 d-inline">Barang</p>
                 </a>
