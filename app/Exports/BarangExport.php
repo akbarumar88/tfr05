@@ -59,6 +59,8 @@ class BarangExport implements FromCollection, WithHeadings, WithStyles, ShouldAu
 
     public function map($barang): array
     {
+        // dd($barang->count());
+
         return [
             $barang->id,
             $barang->kategori,
