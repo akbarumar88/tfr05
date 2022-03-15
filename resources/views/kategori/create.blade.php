@@ -3,7 +3,7 @@
 @section('content')
     <h3 class="mb-3">Tambah Kategori</h3>
 
-    <form method="POST" action="/admin/kategori">
+    <form method="POST" action="{{ url('') }}/admin/kategori">
         @csrf
         <div class="form-group">
             <label for="exampleInputEmail1">Nama Kategori</label>

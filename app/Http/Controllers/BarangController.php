@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarangExport;
 use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PDF;
+use Excel;
 
 class BarangController extends Controller
 {
@@ -162,5 +164,13 @@ class BarangController extends Controller
         return $pdf->stream();
         // return $pdf->download('invoice.pdf');
         // dd('masuk sini gan');
+    }
+
+    /*
+     * Method untuk handle export excel 
+     */
+    public function exportExcel()
+    {
+        return (new BarangExport)->download('Barang.xlsx');
     }
 }

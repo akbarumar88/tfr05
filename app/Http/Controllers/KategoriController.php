@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KategoriExport;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PDF;
+use Excel;
 
 class KategoriController extends Controller
 {
@@ -158,5 +160,22 @@ class KategoriController extends Controller
         return $pdf->stream();
         // return $pdf->download('invoice.pdf');
         // dd('masuk sini gan');
+    }
+
+    /*
+     * Method untuk handle export excel 
+     */
+    public function exportExcel()
+    {
+        // $cari = request('q');
+        // if ($cari) {
+        //     $kategori = Kategori::where('kategori', 'like', "%$cari%")->get();
+        // } else {
+        //     $kategori = Kategori::all();
+        // }
+        // $coba = new KategoriExport;
+        // dd($coba->collection());
+
+        return (new KategoriExport)->download('Kategori.xlsx');
     }
 }

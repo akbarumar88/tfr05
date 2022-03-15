@@ -20,6 +20,11 @@ $entri = request('entri', 10);
         <input type="hidden" name="q" value="{{request('q')}}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-print"></i> Export PDF</button>
     </form>
+    <form action="{{ url('') }}/admin/kategori/exportexcel" class="d-inline" method="POST">
+        @csrf
+        <input type="hidden" name="q" value="{{request('q')}}">
+        <button type="submit" class="btn btn-warning"><i class="fa fa-file-excel"></i> Export Excel</button>
+    </form>
 
     <div class="datatable-wrapper shadow-lg rounded mt-4">
         <div class="datatable-heading p-4 border-bottom">

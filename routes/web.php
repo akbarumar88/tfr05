@@ -47,8 +47,10 @@ Route::get('admin', 'AdminController@index')->middleware('cek_login');
 Route::resource('admin/kategori', 'KategoriController')->except('show')->middleware('cek_login');
 Route::post('admin/kategori/exportpdf', 'KategoriController@exportPDF')->middleware('cek_login');
 Route::get('admin/kategori/previewpdf', 'KategoriController@previewPDF')->middleware('cek_login');
+Route::post('admin/kategori/exportexcel', 'KategoriController@exportExcel')->middleware('cek_login');
 
 // Barang
 Route::resource('admin/barang', 'BarangController')->middleware('cek_login');
 Route::post('admin/barang/exportpdf', 'BarangController@exportPDF')->middleware('cek_login');
 Route::get('admin/barang/previewpdf', 'BarangController@previewPDF')->middleware('cek_login');
+Route::post('admin/barang/exportexcel', 'BarangController@exportExcel')->middleware('cek_login');

@@ -195,7 +195,7 @@
             <div class="row align-items-center">
                 <div class="col-md-8 col-md-offset-2">
                     <!-- login_wrapper -->
-                    <form class="login_wrapper" method="POST" action="/login">
+                    <form class="login_wrapper" method="POST" action="{{ url('') }}/login">
                         @csrf
                         {{-- <div class="row">
                             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-6"> <a href="#"
