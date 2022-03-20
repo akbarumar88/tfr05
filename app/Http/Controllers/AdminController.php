@@ -21,4 +21,9 @@ class AdminController extends Controller
             'dataSample' => $dataSample
         ]);
     }
+
+    public function about()
+    {
+        return view('admin.about');
+    }
 }

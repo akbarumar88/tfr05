@@ -58,3 +58,5 @@ Route::post('admin/barang/exportexcel', 'BarangController@exportExcel')->middlew
 
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');
+// Menampilkan Logo UPN & Kata-kata
+Route::get('about', 'AdminController@about');
