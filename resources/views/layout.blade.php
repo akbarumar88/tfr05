@@ -52,7 +52,7 @@
                 </li>
                 <?php else : ?>
                 <li class="nav-item">
-                    <a href="#" class="nav-link ">{{ auth()->user()->nama }}</a>
+                    <a href="#" class="nav-link ">{{ auth()->user() ? auth()->user()->nama : 'Guest' }}</a>
                 </li>
                 <li class="nav-item">
                     <form action="/logout" class="d-inline" method="POST" id="form-logout">

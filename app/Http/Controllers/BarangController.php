@@ -29,8 +29,8 @@ class BarangController extends Controller
                 "barang.nama",
                 "barang.harga",
                 "barang.created_at",
-                "barang.updated_at",
-            )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();;
+                "barang.updated_at"
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();
         } else {
             $barang = barang::select(
                 "barang.id",
@@ -38,7 +38,7 @@ class BarangController extends Controller
                 "barang.nama",
                 "barang.harga",
                 "barang.created_at",
-                "barang.updated_at",
+                "barang.updated_at"
             )->join("kategori", "kategori.id", "=", "barang.idkategori")->paginate($entri)->withQueryString();
         }
         // dd($barang);
