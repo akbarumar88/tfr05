@@ -55,5 +55,8 @@ Route::post('admin/barang/exportpdf', 'BarangController@exportPDF')->middleware(
 Route::get('admin/barang/previewpdf', 'BarangController@previewPDF')->middleware('cek_login');
 Route::post('admin/barang/exportexcel', 'BarangController@exportExcel')->middleware('cek_login');
 
-// Home
-Route::get('home', 'HomeController@index');
+
+// Sample Diagram
+Route::get('previewdiagram', 'AdminController@previewDiagram');
+// Menampilkan Logo UPN & Kata-kata
+Route::get('about', 'AdminController@about');
