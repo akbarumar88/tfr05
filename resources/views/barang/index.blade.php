@@ -64,6 +64,7 @@ $entri = request('entri', 10);
                         <th scope="col">Kategori</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Harga</th>
+                        <th scope="col">Stok</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -74,6 +75,7 @@ $entri = request('entri', 10);
                             <td>{{ $barang['kategori'] }}</td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ $barang['harga'] }}</td>
+                            <td>{{ $barang['stock'] }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a href="<?= url('') ?>/admin/barang/{{ $barang->id }}/edit" class="btn btn-warning mr-2"><i

@@ -11,6 +11,7 @@
                 <th>Kategori Barang</th>
                 <th>Nama Barang</th>
                 <th>Harga</th>
+                <th>Stok</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
                     <td>{{ $barang['kategori'] }}</td>
                     <td>{{ $barang['nama'] }}</td>
                     <td>{{ $barang['harga'] }}</td>
+                    <td>{{ $barang['stock'] }}</td>
                 </tr>
             @endforeach
         </tbody>

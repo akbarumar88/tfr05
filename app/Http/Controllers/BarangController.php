@@ -28,6 +28,7 @@ class BarangController extends Controller
                 "kategori.kategori as kategori",
                 "barang.nama",
                 "barang.harga",
+                "barang.stock",
                 "barang.created_at",
                 "barang.updated_at",
             )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();;
@@ -37,6 +38,7 @@ class BarangController extends Controller
                 "kategori.kategori as kategori",
                 "barang.nama",
                 "barang.harga",
+                "barang.stock",
                 "barang.created_at",
                 "barang.updated_at",
             )->join("kategori", "kategori.id", "=", "barang.idkategori")->paginate($entri)->withQueryString();
@@ -81,6 +83,7 @@ class BarangController extends Controller
         $barang->idkategori = $request->input('kategori');
         $barang->nama = $request->input('nama');
         $barang->harga = $request->input('harga');
+        $barang->stock = $request->input('stok');
         $barang->save();
 
         return redirect('/admin/barang')->with('success', 'Barang berhasil ditambahkan');
@@ -129,6 +132,7 @@ class BarangController extends Controller
         $barang->idkategori = $request->input('kategori');
         $barang->nama = $request->input('nama');
         $barang->harga = $request->input('harga');
+        $barang->stock = $request->input('stok');
         $barang->save();
 
         return redirect('/admin/barang')->with('success', 'Barang berhasil diubah');
@@ -179,6 +183,7 @@ class BarangController extends Controller
                 "kategori.kategori as kategori",
                 "barang.nama",
                 "barang.harga",
+                "barang.stock",
                 "barang.created_at",
                 "barang.updated_at",
             )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->get();
@@ -188,6 +193,7 @@ class BarangController extends Controller
                 "kategori.kategori as kategori",
                 "barang.nama",
                 "barang.harga",
+                "barang.stock",
                 "barang.created_at",
                 "barang.updated_at",
             )->join("kategori", "kategori.id", "=", "barang.idkategori")->get();

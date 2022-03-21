@@ -19,6 +19,9 @@
             <label for="harga">Harga</label>
             <input type="text" class="form-control" id="harga" aria-describedby="emailHelp" name="harga">
             <small id="emailHelp" class="form-text text-muted">Harga barang yang hendak ditambahkan.</small>
+            <label for="stok">Stok</label>
+            <input type="text" class="form-control" id="stok" aria-describedby="emailHelp" name="stok">
+            <small id="emailHelp" class="form-text text-muted">Stok barang yang hendak ditambahkan.</small>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
