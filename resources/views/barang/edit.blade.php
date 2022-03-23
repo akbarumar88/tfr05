@@ -19,14 +19,17 @@
                 @endforeach
             </select>
             <small id="emailHelp" class="form-text text-muted">Kategori barang yang hendak diubah.</small>
+
             <label for="nama">Nama</label>
-            <input type="text" class="form-control" id="nama" aria-describedby="emailHelp" name="nama" value="{{ $barang->nama }}">
+            <input type="text" class="form-control" id="nama" aria-describedby="emailHelp" name="nama" value="{{ $barang->nama }}" required>
             <small id="emailHelp" class="form-text text-muted">Nama barang yang hendak diubah.</small>
+
             <label for="harga">Harga</label>
-            <input type="text" class="form-control" id="harga" aria-describedby="emailHelp" name="harga" value="{{ $barang->harga }}">
+            <input type="number" class="form-control" id="harga" aria-describedby="emailHelp" name="harga" value="{{ $barang->harga }}" required>
             <small id="emailHelp" class="form-text text-muted">Harga barang yang hendak diubah.</small>
+
             <label for="stok">Stok</label>
-            <input type="text" class="form-control" id="stok" aria-describedby="emailHelp" name="stok" value="{{ $barang->stock }}">
+            <input type="text" class="form-control" id="stok" aria-describedby="emailHelp" name="stok" value="{{ $barang->stock }}" required>
             <small id="emailHelp" class="form-text text-muted">Stok barang yang hendak diubah.</small>
         </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
