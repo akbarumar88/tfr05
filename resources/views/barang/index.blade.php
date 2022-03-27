@@ -1,5 +1,9 @@
 @php
+
 $entri = request('entri', 10);
+$currentPage = request('page', 1);
+$offset = ($currentPage - 1) * $entri;
+
 @endphp
 
 @extends('layout')
@@ -71,7 +75,7 @@ $entri = request('entri', 10);
                 <tbody>
                     @foreach ($data as $i => $barang)
                         <tr>
-                            <th scope="row">{{ $i + 1 }}</th>
+                            <th scope="row">{{ $offset + $i + 1 }}</th>
                             <td>{{ $barang['kategori'] }}</td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ $barang['harga'] }}</td>
