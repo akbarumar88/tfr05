@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PDF;
 use Excel;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KategoriController extends Controller
 {
@@ -60,7 +62,18 @@ class KategoriController extends Controller
         //
         $kategori = new Kategori();
         $kategori->kategori = $request->input('kategori');
+
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Kategori',
+            'keterangan' => 'Menambah kategori',
+            'before' => '',
+            'after' => $kategori->kategori,
+        ];
+
         $kategori->save();
+
+        DB::table('log_user')->insert($log);
 
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil ditambahkan');
     }
@@ -103,8 +116,20 @@ class KategoriController extends Controller
     {
         //
         $kategori = Kategori::find($id);
+        $kategori_old = Kategori::find($id);
         $kategori->kategori = $request->input('kategori');
+
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Kategori',
+            'keterangan' => 'Mengubah kategori',
+            'before' => $kategori_old->kategori,
+            'after' => $kategori->kategori,
+        ];
+
         $kategori->save();
+
+        DB::table('log_user')->insert($log);
 
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil diubah');
     }
@@ -120,7 +145,18 @@ class KategoriController extends Controller
         //
         // dd('masuk ke destroy gan', $id);
         $kategori = Kategori::find($id);
+
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Kategori',
+            'keterangan' => 'Mengahpus kategori',
+            'before' => $kategori->kategori,
+            'after' => '',
+        ];
+
         $kategori->delete();
+
+        DB::table('log_user')->insert($log);
 
         return redirect('/admin/kategori')->with('success', 'Kategori berhasil dihapus');
     }

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PDF;
 use Excel;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BarangController extends Controller
 {
@@ -86,6 +88,16 @@ class BarangController extends Controller
         $barang->stock = $request->input('stok');
         $barang->save();
 
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Barang',
+            'keterangan' => 'Menambah barang',
+            'before' => '',
+            'after' => $barang->nama . ' = ' . $barang->stock,
+        ];
+
+        DB::table('log_user')->insert($log);
+
         return redirect('/admin/barang')->with('success', 'Barang berhasil ditambahkan');
     }
 
@@ -129,11 +141,22 @@ class BarangController extends Controller
     {
         //
         $barang = Barang::find($id);
+        $barang_old = Barang::find($id);
         $barang->idkategori = $request->input('kategori');
         $barang->nama = $request->input('nama');
         $barang->harga = $request->input('harga');
         $barang->stock = $request->input('stok');
         $barang->save();
+
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Barang',
+            'keterangan' => 'Mengubah barang',
+            'before' => $barang_old->nama . ' = ' . $barang_old->stock,
+            'after' => $barang->nama . ' = ' . $barang->stock,
+        ];
+
+        DB::table('log_user')->insert($log);
 
         return redirect('/admin/barang')->with('success', 'Barang berhasil diubah');
     }
@@ -149,7 +172,18 @@ class BarangController extends Controller
         //
         // dd('masuk ke destroy gan', $id);
         $barang = Barang::find($id);
+
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Barang',
+            'keterangan' => 'Mengahpus barang',
+            'before' => $barang->nama . ' = ' . $barang->stock,
+            'after' => '',
+        ];
+
         $barang->delete();
+
+        DB::table('log_user')->insert($log);
 
         return redirect('/admin/barang')->with('success', 'Barang berhasil dihapus');
     }
