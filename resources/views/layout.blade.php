@@ -43,34 +43,34 @@
 
             <ul class="navbar-nav ml-auto">
                 <?php if (!empty(session('id'))) : ?>
-                <li class="nav-item">
-                    <a href="<?= '#' ?>" class="nav-link">Login</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="<?= '#' ?>" class="nav-link">Login</a>
+                    </li>
 
-                <li class="nav-item">
-                    <a href="<?= '#' ?>" class="nav-link">Register</a>
-                </li>
+                    <li class="nav-item">
+                        <a href="<?= '#' ?>" class="nav-link">Register</a>
+                    </li>
                 <?php else : ?>
-                <li class="nav-item">
-                    <a href="#" class="nav-link ">{{ auth()->user() ? auth()->user()->nama : 'Guest' }}</a>
-                </li>
-                <li class="nav-item">
-                    <form action="/logout" class="d-inline" method="POST" id="form-logout">
-                        @csrf
-                        {{-- <button type="submit" class="nav-link">Logout</button> --}}
-                        <a href="#" onclick="logout()" class="nav-link">Logout</a>
-                    </form>
-                </li>
-                {{-- <li class="nav-item">
-                    <a href="<?= '#' ?>" class="nav-link">Histori</a>
-                </li> --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link ">{{ auth()->user() ? auth()->user()->nama : 'Guest' }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="/logout" class="d-inline" method="POST" id="form-logout">
+                            @csrf
+                            {{-- <button type="submit" class="nav-link">Logout</button> --}}
+                            <a href="#" onclick="logout()" class="nav-link">Logout</a>
+                        </form>
+                    </li>
+                    {{-- <li class="nav-item">
+                        <a href="<?= '#' ?>" class="nav-link">Histori</a>
+                    </li> --}}
 
-                <!-- Menu khusus untuk Admin Web MOOVEE. -->
-                <?php if (session('role') == 1) : ?>
-                <li class="nav-item">
-                    <a href="<?= '' ?>" class="nav-link">Admin Page</a>
-                </li>
-                <?php endif; ?>
+                    <!-- Menu khusus untuk Admin Web MOOVEE. -->
+                    <?php if (session('role') == 1) : ?>
+                    <li class="nav-item">
+                        <a href="<?= '' ?>" class="nav-link">Admin Page</a>
+                    </li>
+                    <?php endif; ?>
                 <?php endif; ?>
             </ul>
 
