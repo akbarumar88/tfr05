@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -34,6 +35,16 @@ class LoginController extends Controller
         // dd([$attempt1, $attempt2]);
 
         if ($attempt1) {
+            $log = [
+                'iduser' => Auth::user()->id,
+                'menu' => 'Log In',
+                'keterangan' => 'User telah log in',
+                'before' => '',
+                'after' => '',
+            ];
+
+            DB::table('log_user')->insert($log);
+
             $request->session()->regenerate();
 
             return redirect()->intended('/admin');
@@ -50,6 +61,16 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $log = [
+            'iduser' => Auth::user()->id,
+            'menu' => 'Log Out',
+            'keterangan' => 'User telah log out',
+            'before' => '',
+            'after' => '',
+        ];
+
+        DB::table('log_user')->insert($log);
+
         Auth::logout();
 
         $request->session()->invalidate();
