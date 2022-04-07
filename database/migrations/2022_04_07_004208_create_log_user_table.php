@@ -20,7 +20,8 @@ class CreateLogUserTable extends Migration
             $table->char('keterangan');
             $table->char('before');
             $table->char('after');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
