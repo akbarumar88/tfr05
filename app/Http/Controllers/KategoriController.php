@@ -63,12 +63,16 @@ class KategoriController extends Controller
         $kategori = new Kategori();
         $kategori->kategori = $request->input('kategori');
 
+        $after = [
+            'kategori' => $kategori->kategori,
+        ];
+
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Kategori',
             'keterangan' => 'Menambah kategori',
             'before' => '',
-            'after' => $kategori->kategori,
+            'after' => json_encode($after),
         ];
 
         $kategori->save();
@@ -119,12 +123,20 @@ class KategoriController extends Controller
         $kategori_old = Kategori::find($id);
         $kategori->kategori = $request->input('kategori');
 
+        $before = [
+            'kategori' => $kategori_old->kategori,
+        ];
+
+        $after = [
+            'kategori' => $kategori->kategori,
+        ];
+
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Kategori',
             'keterangan' => 'Mengubah kategori',
-            'before' => $kategori_old->kategori,
-            'after' => $kategori->kategori,
+            'before' => json_encode($before),
+            'after' => json_encode($after),
         ];
 
         $kategori->save();
@@ -146,11 +158,15 @@ class KategoriController extends Controller
         // dd('masuk ke destroy gan', $id);
         $kategori = Kategori::find($id);
 
+        $before = [
+            'kategori' => $kategori->kategori,
+        ];
+
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Kategori',
             'keterangan' => 'Mengahpus kategori',
-            'before' => $kategori->kategori,
+            'before' => json_encode($before),
             'after' => '',
         ];
 

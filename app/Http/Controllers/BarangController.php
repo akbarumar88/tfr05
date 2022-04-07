@@ -88,12 +88,21 @@ class BarangController extends Controller
         $barang->stock = $request->input('stok');
         $barang->save();
 
+        $kategori = Kategori::find($barang->idkategori);
+
+        $after = [
+            'kategori' => $kategori->kategori,
+            'nama' => $barang->nama,
+            'harga' => $barang->harga,
+            'stock' => $barang->stock,
+        ];
+
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Barang',
             'keterangan' => 'Menambah barang',
             'before' => '',
-            'after' => $barang->nama . ' = ' . $barang->stock,
+            'after' => json_encode($after),
         ];
 
         DB::table('log_user')->insert($log);
@@ -148,12 +157,29 @@ class BarangController extends Controller
         $barang->stock = $request->input('stok');
         $barang->save();
 
+        $kategori_old = Kategori::find($barang_old->idkategori);
+        $kategori = Kategori::find($barang->idkategori);
+
+        $before = [
+            'kategori' => $kategori_old->kategori,
+            'nama' => $barang_old->nama,
+            'harga' => $barang_old->harga,
+            'stock' => $barang_old->stock,
+        ];
+
+        $after = [
+            'kategori' => $kategori->kategori,
+            'nama' => $barang->nama,
+            'harga' => $barang->harga,
+            'stock' => $barang->stock,
+        ];
+
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Barang',
             'keterangan' => 'Mengubah barang',
-            'before' => $barang_old->nama . ' = ' . $barang_old->stock,
-            'after' => $barang->nama . ' = ' . $barang->stock,
+            'before' => json_encode($before),
+            'after' => json_encode($after),
         ];
 
         DB::table('log_user')->insert($log);
@@ -172,12 +198,20 @@ class BarangController extends Controller
         //
         // dd('masuk ke destroy gan', $id);
         $barang = Barang::find($id);
+        $kategori = Kategori::find($barang->idkategori);
+
+        $before = [
+            'kategori' => $kategori->kategori,
+            'nama' => $barang->nama,
+            'harga' => $barang->harga,
+            'stock' => $barang->stock,
+        ];
 
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Barang',
             'keterangan' => 'Mengahpus barang',
-            'before' => $barang->nama . ' = ' . $barang->stock,
+            'before' => json_encode($before),
             'after' => '',
         ];
 
