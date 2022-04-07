@@ -18,7 +18,7 @@ class CreateLogUserTable extends Migration
             $table->integer('iduser');
             $table->char('menu');
             $table->char('keterangan');
-            $table->char('berfore');
+            $table->char('before');
             $table->char('after');
             $table->timestamps();
         });
