@@ -55,6 +55,11 @@ Route::post('admin/barang/exportpdf', 'BarangController@exportPDF')->middleware(
 Route::get('admin/barang/previewpdf', 'BarangController@previewPDF')->middleware('cek_login');
 Route::post('admin/barang/exportexcel', 'BarangController@exportExcel')->middleware('cek_login');
 
+// Pelanggan
+Route::resource('admin/pelanggan', 'PelangganController')->middleware('cek_login');
+Route::post('admin/pelanggan/exportpdf', 'PelangganController@exportPDF')->middleware('cek_login');
+Route::get('admin/pelanggan/previewpdf', 'PelangganController@previewPDF')->middleware('cek_login');
+Route::post('admin/pelanggan/exportexcel', 'PelangganController@exportExcel')->middleware('cek_login');
 
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');

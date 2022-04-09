@@ -140,6 +140,7 @@
                 </a>
             </div>
 
+            {{-- Menu-menu Master --}}
             <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">MASTER</p>
                 <a href="<?= url('') ?>/admin/kategori"
@@ -151,6 +152,22 @@
                     class="d-block py-2 {{ Request::is('admin/barang') ? 'active' : '' }}">
                     <i class="fa fa-briefcase menu-icon"></i>
                     <p class="sidebar-item mb-0 d-inline">Barang</p>
+                </a>
+                <a href="<?= url('') ?>/admin/pelanggan"
+                    class="d-block py-2 {{ Request::is('admin/pelanggan') ? 'active' : '' }}">
+                    <i class="fa fa-briefcase menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Pelanggan</p>
+                </a>
+            </div>
+
+            {{-- Menu-menu Transaksi --}}
+            <div class="sidebar-section-group border-top border-bottom border-light">
+                <p class="sidebar-section-category mb-2">TRANSAKSI</p>
+                <a href="<?= url('') ?>/admin/kategori"
+                    class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                    {{-- <i class="fa fa-chart-bar menu-icon"></i> --}}
+                    <i class="fa fa-solid fa-cash-register menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Penjualan</p>
                 </a>
             </div>
 
