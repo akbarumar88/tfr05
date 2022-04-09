@@ -24,8 +24,7 @@ class BarangController extends Controller
         $cari = request('q');
         $entri = request('entri', 10);
 
-        if ($cari) {
-            $barang = barang::select(
+        $barang = barang::select(
                 "barang.id",
                 "kategori.kategori as kategori",
                 "barang.nama",
@@ -33,18 +32,25 @@ class BarangController extends Controller
                 "barang.stock",
                 "barang.created_at",
                 "barang.updated_at"
-            )->join("kategori", "kategori.id", "=", "barang.idkategori")->where('nama', 'like', "%$cari%")->paginate($entri)->withQueryString();
-        } else {
-            $barang = barang::select(
-                "barang.id",
-                "kategori.kategori as kategori",
-                "barang.nama",
-                "barang.harga",
-                "barang.stock",
-                "barang.created_at",
-                "barang.updated_at"
-            )->join("kategori", "kategori.id", "=", "barang.idkategori")->paginate($entri)->withQueryString();
-        }
+            )->join("kategori", "kategori.id", "=", "barang.idkategori")
+            ->when(!empty($cari), function ($query) use ($cari) {
+                return $query->where('nama', 'like', "%$cari%");
+            })
+            ->paginate($entri)
+            ->withQueryString();
+        // if ($cari) {
+            
+        // } else {
+        //     $barang = barang::select(
+        //         "barang.id",
+        //         "kategori.kategori as kategori",
+        //         "barang.nama",
+        //         "barang.harga",
+        //         "barang.stock",
+        //         "barang.created_at",
+        //         "barang.updated_at"
+        //     )->join("kategori", "kategori.id", "=", "barang.idkategori")->paginate($entri)->withQueryString();
+        // }
         // dd($barang);
         //
         $queryParams = request()->all();
