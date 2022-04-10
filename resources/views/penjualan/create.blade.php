@@ -42,11 +42,12 @@
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Tanggal</label>
                 <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="exampleInputEmail1"
-                    aria-describedby="emailHelp" name="tgl">
+                    aria-describedby="emailHelp" name="tgl" value="{{ date('Y-m-d') }}">
                 <small id="emailHelp" class="form-text text-muted">Tanggal Transaksi</small>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="{{url('') . '/admin/penjualan/pilihbarang'}}" class="btn btn-success"><i class="fa fa-plus"></i> Obat</a>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
     </form>
 @endsection

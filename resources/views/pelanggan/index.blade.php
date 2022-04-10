@@ -67,7 +67,7 @@ $offset = ($currentPage - 1) * $entri;
                         <th scope="col">No.</th>
                         <th scope="col">Nama</th>
                         <th scope="col">Alamat</th>
-                        <th scope="col">Notelp</th>
+                        <th scope="col">No. telp</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -81,15 +81,14 @@ $offset = ($currentPage - 1) * $entri;
                             <td>
                                 <div class="d-flex">
                                     <a href="<?= url('') ?>/admin/pelanggan/{{ $pelanggan->id }}/edit" class="btn btn-warning mr-2"><i
-                                            class="fa fa-edit"></i> Edit</a>
+                                            class="fa fa-edit"></i></a>
 
                                     <form action="<?= url('') ?>/admin/pelanggan/{{ $pelanggan->id }}" method="POST">
                                         @csrf
                                         @method('DELETE')
 
                                         <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')"
-                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
-                                            Hapus</button>
+                                            type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                     </form>
                                 </div>
                             </td>
