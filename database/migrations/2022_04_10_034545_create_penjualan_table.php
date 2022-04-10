@@ -21,7 +21,6 @@ class CreatePenjualanTable extends Migration
             $table->string("nofaktur", 20);
             $table->decimal("bayar", 30, 2);
             $table->decimal("kembali", 30, 2);
-            $table->integer("idpelangan");
             // $table->timestamps();
         });
     }
