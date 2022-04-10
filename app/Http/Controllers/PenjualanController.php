@@ -83,6 +83,17 @@ class PenjualanController extends Controller
 
     public function uncentang(Request $request)
     {
-        return json_encode($request);
+        $barang = $request->all();
+        $current = collect(session('cart', [])); // Getting old data
+        
+        $filtered = $current->filter(function ($el) use ($barang)
+        {
+            return $el['id'] != $barang['id'];
+        });
+        session(['cart' => $filtered->all()]);
+        return json_encode([
+            'status' => 1,
+            'message' => "Berhasil Uncentang"
+        ]);
     }
 }

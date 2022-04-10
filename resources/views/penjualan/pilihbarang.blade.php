@@ -8,7 +8,6 @@ $idbarang_in_cart = $cart->map(function ($el) {
     return $el['id'];
 });
 // dd($idbarang_in_cart);
-
 @endphp
 
 @extends('layout')
@@ -81,8 +80,9 @@ $idbarang_in_cart = $cart->map(function ($el) {
                     @foreach ($data as $i => $barang)
                         @php
                             $checked = '';
-                            if ($idbarang_in_cart->contains($barang['id']))
+                            if ($idbarang_in_cart->contains($barang['id'])) {
                                 $checked = 'checked';
+                            }
                         @endphp
                         <tr>
                             <th scope="row">{{ $offset + $i + 1 }}</th>
@@ -92,8 +92,9 @@ $idbarang_in_cart = $cart->map(function ($el) {
                             <td>{{ $barang['stock'] }}</td>
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input position-static centang" type="checkbox" id="blankCheckbox"
-                                        value="{{ json_encode($barang) }}" aria-label="..." {{$checked}}>
+                                    <input class="form-check-input position-static centang" type="checkbox"
+                                        id="blankCheckbox" value="{{ json_encode($barang) }}" aria-label="..."
+                                        {{ $checked }}>
                                 </div>
                             </td>
                         </tr>
@@ -107,42 +108,37 @@ $idbarang_in_cart = $cart->map(function ($el) {
     </div>
 
     <script>
-        $(".centang").change(function (e) {
+        $(".centang").change(function(e) {
             let value = JSON.parse($(this).val())
             // console.log("value", value)
+            let url = ""
             if (this.checked) {
                 // Set ke session
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url('') . '/admin/penjualan/centang' }}",
-                    data: ({
-                        '_token': "{{ csrf_token() }}",
-                        ...value
-                    }),
-                    dataType: "JSON",
-                    contentType: 'application/x-www-form-urlencoded; charset=utf-8',
-                    success: function (res) {
-                        console.log('success centang', res)
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {  
-                        console.log('ERROR centang', {resText:jqXHR.responseText, textStatus, errorThrown})
-                    }
-                });
+                url = "{{ url('') . '/admin/penjualan/centang' }}"
             } else {
                 // Hapus dari session
-                $.ajax({
-                    type: "POST",
-                    url: "url",
-                    data: "",
-                    dataType: "JSON",
-                    success: function (response) {
-                        
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {  
-                        console.log('ERROR uncentang', {jqXHR, textStatus, errorThrown})
-                    }
-                });
+                url = "{{ url('') . '/admin/penjualan/uncentang' }}"
             }
+            $.ajax({
+                type: "POST",
+                url,
+                data: ({
+                    '_token': "{{ csrf_token() }}",
+                    ...value
+                }),
+                dataType: "JSON",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                success: function(res) {
+                    console.log('success centang/uncentang', res)
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('ERROR centang/uncentang', {
+                        resText: jqXHR.responseText,
+                        textStatus,
+                        errorThrown
+                    })
+                }
+            });
         })
     </script>
     {{-- {{ dd($data) }} --}}
