@@ -165,7 +165,7 @@ class KategoriController extends Controller
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Kategori',
-            'keterangan' => 'Mengahpus kategori',
+            'keterangan' => 'Menghapus kategori',
             'before' => json_encode($before),
             'after' => '',
         ];
