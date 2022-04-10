@@ -17,19 +17,39 @@ class PelangganSeeder extends Seeder
         // Menambahkan data seeder untuk data pelanggan.
         $pelanggan = [
             [
-                'nama' => 'Akbar Umar Alfaroq',
-                'alamat' => 'Perum. Bukit Permata Sukodono Blok J 12A',
-                'notelp' => '083117208776',
+                'nama' => 'Raviy Bayu Seiaji',
+                'alamat' => 'Sedati, Sidoarjo',
+                'notelp' => '083117208771',
             ],
             [
-                'nama' => 'Firmansyah Firdaus Anhar',
-                'alamat' => 'Perum. Citra Fajar Golf Buduran Blok I 23b',
-                'notelp' => '085606021573',
+                'nama' => 'Aldo Reghan',
+                'alamat' => 'Sidoarjo, Sidoarjo',
+                'notelp' => '085104021573',
             ],
             [
-                'nama' => 'Muhammad Yafi Firdaus',
-                'alamat' => 'Perum. Kahuripan Nirwana Blok AG-23',
-                'notelp' => '083178872330',
+                'nama' => 'Bagaskara Antaris',
+                'alamat' => 'Perum. Bhayangkaran Masangan Kulon Sukodono Blok G No. 12b',
+                'notelp' => '083171872330',
+            ],
+            [
+                'nama' => 'Aldhi Nur',
+                'alamat' => 'SiwalanPandji, Buduran, Sidoarjo',
+                'notelp' => '081171872330',
+            ],
+            [
+                'nama' => 'Wanda Berlian',
+                'alamat' => 'Adi Buana, Sidoarjo',
+                'notelp' => '081176870330',
+            ],
+            [
+                'nama' => 'Indra Arsy K',
+                'alamat' => 'Sukodono, Sukodono',
+                'notelp' => '085171871330',
+            ],
+            [
+                'nama' => 'Indah P',
+                'alamat' => 'Masangan Wetan, Sukodono, Sidoarjo',
+                'notelp' => '087171872331',
             ],
         ];
 
