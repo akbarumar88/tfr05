@@ -61,6 +61,9 @@ Route::post('admin/pelanggan/exportpdf', 'PelangganController@exportPDF')->middl
 Route::get('admin/pelanggan/previewpdf', 'PelangganController@previewPDF')->middleware('cek_login');
 Route::post('admin/pelanggan/exportexcel', 'PelangganController@exportExcel')->middleware('cek_login');
 
+// Routing Transaksi Penjualan
+Route::get('admin/penjualan', 'PenjualanController@create')->middleware('cek_login');
+
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');
 // Menampilkan Logo UPN & Kata-kata

@@ -163,8 +163,8 @@
             {{-- Menu-menu Transaksi --}}
             <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">TRANSAKSI</p>
-                <a href="<?= url('') ?>/admin/kategori"
-                    class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                <a href="<?= url('') ?>/admin/penjualan"
+                    class="d-block py-2 {{ Request::is('admin/penjualan') ? 'active' : '' }}">
                     {{-- <i class="fa fa-chart-bar menu-icon"></i> --}}
                     <i class="fa fa-solid fa-cash-register menu-icon"></i>
                     <p class="sidebar-item mb-0 d-inline">Penjualan</p>
