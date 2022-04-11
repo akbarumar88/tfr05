@@ -1,6 +1,9 @@
 @php
 // dd(auth()->user());
-$cart = collect(session('cart', []));
+$iduser = auth()->user()->id;
+$session_penjualan = session($iduser.'_penjualan', []);
+$cart = collect(session($iduser . '_cart', []));
+
 @endphp
 
 @extends('layout')
@@ -60,39 +63,41 @@ $cart = collect(session('cart', []));
             Obat</a>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
 
-        <table class="table table-striped mt-4" id="cart">
-            <thead>
-                <tr>
-                    <th>Action</th>
-                    <th>Nama</th>
-                    <th>Harga</th>
-                    <th>Jumlah</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($cart as $barang)
+        @if ($cart->isNotEmpty())
+            <table class="table table-striped mt-4" id="cart">
+                <thead>
                     <tr>
-                        <td>
-                            <form action="<?= url('') ?>/admin/penjualan/uncentang" method="POST">
-                                @csrf
-                                @method('DELETE')
-
-                                <input type="hidden" name="id" value="{{ $barang['id'] }}">
-                                <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')" type="submit"
-                                    class="btn btn-sm btn-danger"><i style="" class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
-                        <td>{{ $barang['nama'] }}</td>
-                        <td>{{ number_format($barang['harga']) }}</td>
-                        <td>
-                            <input type="number" value="{{ $barang['jumlah'] }}" class="form-control"
-                                style="width:auto">
-                            {{-- <p>{{ $barang['jumlah'] }}</p> --}}
-                        </td>
+                        <th>Action</th>
+                        <th>Nama</th>
+                        <th>Harga</th>
+                        <th>Jumlah</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($cart as $barang)
+                        <tr>
+                            <td>
+                                <form action="<?= url('') ?>/admin/penjualan/uncentang" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <input type="hidden" name="id" value="{{ $barang['id'] }}">
+                                    <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')" type="submit"
+                                        class="btn btn-sm btn-danger"><i style="" class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                            <td>{{ $barang['nama'] }}</td>
+                            <td>{{ number_format($barang['harga']) }}</td>
+                            <td>
+                                <input type="number" value="{{ $barang['jumlah'] }}" class="form-control"
+                                    style="width:auto">
+                                {{-- <p>{{ $barang['jumlah'] }}</p> --}}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
     </form>
 
     <script>
@@ -118,8 +123,8 @@ $cart = collect(session('cart', []));
                 contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                 success: function(res) {
                     console.log('success Set SESSION', res)
-                    let urlTo = "{{ url('') . '/admin/penjualan/setsession' }}"
-                    // window.location.href = urlTo
+                    let urlTo = "{{ url('') . '/admin/penjualan/pilihbarang' }}"
+                    window.location.href = urlTo
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log('ERROR Set SESSION', {

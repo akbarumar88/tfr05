@@ -11,6 +11,9 @@ class PenjualanController extends Controller
     //
     public function create()
     {
+        $iduser = auth()->user()->id;
+        // session([$iduser.'_penjualan' => []]);
+        // session(['cart' => []]);
         // dd(session('cart'));
         $pelanggan = Pelanggan::all();
         return view('penjualan.create', [
@@ -72,15 +75,10 @@ class PenjualanController extends Controller
 
         $barang = $request->all();
         $iduser = auth()->user()->id;
-        $session_penjualan = session($iduser . '_penjualan', []); // Getting old data
-        if (empty($session_penjualan['cart'])) {
-            $current = [];
-        } else {
-            $current = $session_penjualan['cart'];
-        }
+        $current = session($iduser . '_cart', []);
 
         $current[] = array_merge($barang, ['jumlah' => 1]); // Push new data
-        session([$iduser . '_penjualan' => array_merge($session_penjualan, ['cart' => $current])]);
+        session([$iduser . '_cart' => $current]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil centang"
@@ -91,13 +89,12 @@ class PenjualanController extends Controller
     {
         $barang = $request->all();
         $iduser = auth()->user()->id;
-        $session_penjualan = session($iduser . '_penjualan', []); // Getting old data
-        $current = collect($session_penjualan['cart']); // Getting old data
+        $current = collect(session($iduser . '_cart', [])); // Getting old data
 
         $filtered = $current->filter(function ($el) use ($barang) {
             return $el['id'] != $barang['id'];
         });
-        session([$iduser . '_penjualan' => array_merge($session_penjualan, ['cart' => $filtered->all()])]);
+        session([$iduser . '_cart' => $filtered]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil Uncentang"
@@ -109,7 +106,7 @@ class PenjualanController extends Controller
         $data = $request->all();
         $iduser = auth()->user()->id;
 
-        session(["{$iduser}_penjualan" => $data]);
+        // session([$iduser . '_penjualan' => $data]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil set session",

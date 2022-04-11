@@ -1,9 +1,10 @@
 @php
 
+$iduser = auth()->user()->id;
 $entri = request('entri', 10);
 $currentPage = request('page', 1);
 $offset = ($currentPage - 1) * $entri;
-$cart = collect(session('cart', []));
+$cart = collect(session($iduser . '_cart', []));
 $idbarang_in_cart = $cart->map(function ($el) {
     return $el['id'];
 });
@@ -22,17 +23,17 @@ $idbarang_in_cart = $cart->map(function ($el) {
     {{-- {{dd($params)}} --}}
     <h3 class="mb-3">Data Barang</h3>
 
-    <a href="<?= url('') ?>/admin/barang/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
-    <form action="<?= url('') ?>/admin/barang/exportpdf" class="d-inline" method="POST">
+    <a href="{{ url('admin/penjualan') }}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Kembali</a>
+    {{-- <form action="{{ url('') }}/admin/barang/exportpdf" class="d-inline" method="POST">
         @csrf
         <input type="hidden" name="q" value="{{ request('q') }}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-print"></i> Export PDF</button>
     </form>
-    <form action="<?= url('') ?>/admin/barang/exportexcel" class="d-inline" method="POST">
+    <form action="{{ url('') }}/admin/barang/exportexcel" class="d-inline" method="POST">
         @csrf
         <input type="hidden" name="q" value="{{ request('q') }}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-file-excel"></i> Export Excel</button>
-    </form>
+    </form> --}}
 
     <div class="datatable-wrapper shadow-lg rounded mt-4">
         <div class="datatable-heading p-4 border-bottom">
