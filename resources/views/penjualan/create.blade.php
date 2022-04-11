@@ -85,7 +85,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 <label for="exampleInputEmail1">Jumlah Kembalian</label>
                 <input placeholder="Jumlah Kembali" type="text" class="form-control" id="kembali"
                     aria-describedby="emailHelp" name="kembali" readonly
-                    value="{{ old('kembali', $session_penjualan['kembali'] ?? '') }}">
+                    value="{{ old('kembali', '') }}">
                 <small id="emailHelp" class="form-text text-muted">Jumlah Kembali</small>
             </div>
         </div>
@@ -201,17 +201,21 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             // console.log(jml, barang)
         })
 
-        $("#bayar").change(function(e) {
-            let bayar = $(this).val()
+        function calculateKembalian() {
+            let bayar = $("#bayar").val()
             let grandTotal = calculateGrandTotal()
             let kembali = bayar - grandTotal
-            console.log('masuk bayar change', {
+            console.log('masuk calculateKembalian', {
                 bayar,
                 grandTotal,
                 kembali
             })
             let kembaliFormat = new Intl.NumberFormat().format(kembali)
             $("#kembali").val(kembaliFormat)
+        }
+
+        $("#bayar").change(function(e) {
+            calculateKembalian()
         })
 
         $(".hapus").click(function (e) {
@@ -239,6 +243,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                     // Hapus dari DOM
                     trElement.remove()
                     calculateGrandTotal()
+                    calculateKembalian()
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     NProgress.done()
