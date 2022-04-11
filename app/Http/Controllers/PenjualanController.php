@@ -73,7 +73,7 @@ class PenjualanController extends Controller
         $barang = $request->all();
         $current = session('cart', []); // Getting old data
         
-        $current[] = $barang; // Push new data
+        $current[] = array_merge($barang, ['jumlah' => 1]); // Push new data
         session(['cart' => $current]);
         return json_encode([
             'status' => 1,
