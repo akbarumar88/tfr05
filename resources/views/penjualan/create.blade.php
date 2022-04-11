@@ -28,7 +28,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
 
     <h3 class="mb-3">Penjualan Barang</h3>
 
-    <form method="POST" action="{{ url('') }}/admin/kategori">
+    <form method="POST" action="{{ url('') }}/admin/kategori" id="penjualan">
         @csrf
 
         <input type="hidden" name="iduser" value="{{ auth()->user()->id }}">
@@ -84,8 +84,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Kembalian</label>
                 <input placeholder="Jumlah Kembali" type="text" class="form-control" id="kembali"
-                    aria-describedby="emailHelp" name="kembali" readonly
-                    value="{{ old('kembali', '') }}">
+                    aria-describedby="emailHelp" name="kembali" readonly value="{{ old('kembali', '') }}">
                 <small id="emailHelp" class="form-text text-muted">Jumlah Kembali</small>
             </div>
         </div>
@@ -111,10 +110,11 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                         @php
                             $subtotal = $barang['jumlah'] * $barang['harga'];
                         @endphp
-                        <tr data-value="{{json_encode($barang)}}">
+                        <tr data-value="{{ json_encode($barang) }}">
                             <td>
                                 <input type="hidden" name="id" value="{{ $barang['id'] }}">
-                                <button type="button" class="btn btn-sm btn-danger hapus"><i style="" class="fa fa-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-danger hapus"><i style=""
+                                        class="fa fa-trash"></i></button>
                             </td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
@@ -218,7 +218,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             calculateKembalian()
         })
 
-        $(".hapus").click(function (e) {
+        $(".hapus").click(function(e) {
             let yes = confirm('Apakah anda yakin ingin menghapus data?')
             if (!yes) return // Jika pilih tidak, maka return
 
@@ -254,6 +254,35 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                     })
                 }
             });
+        })
+
+        $("#penjualan").submit(function(e) {
+            // Validasi Form
+            let idpelanggan = $("#pelanggan").val()
+            let tgl = $("#tgl").val()
+            let kembali = $("#kembali").val()
+            let bayar = $("#bayar").val()
+
+            console.log({
+                idpelanggan,
+                tgl,
+                bayar,
+                kembali
+            });
+            if (tgl == null || tgl == "") {
+                alert("Harap Isi Tanggal")
+                return false
+            } else if (kembali == null || kembali == "") {
+                alert("Harap Isi Jumlah Bayar")
+                return false
+            }
+            kembali = parseFloat(kembali.replace(",", ""))
+            // console.log('after comma removed', kembali)
+            if (kembali < 0) {
+                alert("Uang Tunai Kurang!")
+                return false
+            }
+            return false
         })
     </script>
 @endsection
