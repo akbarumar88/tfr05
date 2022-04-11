@@ -1,10 +1,17 @@
 @php
 // dd(auth()->user());
 $iduser = auth()->user()->id;
-$session_penjualan = session($iduser.'_penjualan', []);
+$session_penjualan = session($iduser . '_penjualan', []);
 $cart = collect(session($iduser . '_cart', []));
 
+$grandTotal = 0;
+$cart->each(function ($barang, $i) use (&$grandTotal) {
+    // dd($barang);
+    $grandTotal += $barang['jumlah'] * $barang['harga'];
+});
+
 @endphp
+
 
 @extends('layout')
 
@@ -64,6 +71,7 @@ $cart = collect(session($iduser . '_cart', []));
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
 
         @if ($cart->isNotEmpty())
+            <h1 id="grandtotal" class="text-right">{{ number_format($grandTotal) }}</h1>
             <table class="table table-striped mt-4" id="cart">
                 <thead>
                     <tr>
@@ -86,15 +94,16 @@ $cart = collect(session($iduser . '_cart', []));
                                     @method('DELETE')
 
                                     <input type="hidden" name="id" value="{{ $barang['id'] }}">
-                                    <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')" type="submit"
-                                        class="btn btn-sm btn-danger"><i style="" class="fa fa-trash"></i></button>
+                                    <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')"
+                                        type="submit" class="btn btn-sm btn-danger"><i style=""
+                                            class="fa fa-trash"></i></button>
                                 </form>
                             </td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
                             <td>
                                 <input type="number" value="{{ $barang['jumlah'] }}" class="form-control cart-jumlah"
-                                    style="width:auto" data-value="{{json_encode($barang)}}">
+                                    style="width:auto" data-value="{{ json_encode($barang) }}">
                                 {{-- <p>{{ $barang['jumlah'] }}</p> --}}
                             </td>
                             <td class="cart-subtotal">{{ number_format($subtotal) }}</td>
@@ -141,13 +150,29 @@ $cart = collect(session($iduser . '_cart', []));
             });
         })
 
-        $(".cart-jumlah").change(function (e) {
+        function calculateGrandTotal() {
+            let grandTotal = 0
+            $(".cart-jumlah").each(function(el) {
+                let jml = $(this).val()
+                let barang = $(this).data('value')
+                let subtotal = barang.harga * jml
+                // console.log({jml,barang,subtotal})
+                grandTotal += subtotal
+                // console.log(el)
+            })
+            grandTotal = new Intl.NumberFormat().format(grandTotal)
+            console.log(grandTotal)
+            $('#grandtotal').html(grandTotal)
+        }
+
+        $(".cart-jumlah").change(function(e) {
             let barang = $(this).data('value')
             let jml = e.target.value
             let subtotal = barang.harga * jml
             subtotal = new Intl.NumberFormat().format(subtotal)
 
             $(this).parent().siblings(".cart-subtotal").html(subtotal)
+            calculateGrandTotal()
             // console.log(jml, barang)
         })
     </script>
