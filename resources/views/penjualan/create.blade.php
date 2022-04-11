@@ -3,13 +3,14 @@
 $iduser = auth()->user()->id;
 $session_penjualan = session($iduser . '_penjualan', []);
 $cart = collect(session($iduser . '_cart', []));
-
+// dd($session_penjualan);
 $grandTotal = 0;
 $cart->each(function ($barang, $i) use (&$grandTotal) {
     // dd($barang);
     $grandTotal += $barang['jumlah'] * $barang['harga'];
 });
 
+// dd(old('tgl', $session_penjualan['tgl']))
 @endphp
 
 
@@ -42,7 +43,11 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 <label for="exampleInputEmail1">Pelanggan</label>
                 <select name="idpelanggan" id="pelanggan" aria-describedby="pelangganHelp" class="form-control">
                     @foreach ($pelanggan as $item)
-                        <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                        @php
+                            $selected = old('idpelanggan', $session_penjualan['idpelanggan']);
+                            $isSelected = $item->id == $selected ? 'selected' : '';
+                        @endphp
+                        <option value="{{ $item->id }}" {{ $isSelected }}>{{ $item->nama }}</option>
                     @endforeach
 
                 </select>
@@ -61,13 +66,13 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Tanggal</label>
                 <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="tgl" aria-describedby="emailHelp"
-                    name="tgl" value="{{ date('Y-m-d') }}">
+                    name="tgl" value="{{ old('tgl', $session_penjualan['tgl']) }}">
                 <small id="emailHelp" class="form-text text-muted">Tanggal Transaksi</small>
             </div>
         </div>
 
         <a href="#" class="btn btn-success" id="pilihbarang"><i class="fa fa-plus"></i>
-            Obat</a>
+            Barang</a>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
 
         @if ($cart->isNotEmpty())

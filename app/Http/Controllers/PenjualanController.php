@@ -12,7 +12,8 @@ class PenjualanController extends Controller
     public function create()
     {
         $iduser = auth()->user()->id;
-        // session([$iduser.'_penjualan' => []]);
+        $head = session($iduser.'_penjualan');
+        // dd($head);
         // session(['cart' => []]);
         // dd(session('cart'));
         $pelanggan = Pelanggan::all();
@@ -106,7 +107,7 @@ class PenjualanController extends Controller
         $data = $request->all();
         $iduser = auth()->user()->id;
 
-        // session([$iduser . '_penjualan' => $data]);
+        session([$iduser . '_penjualan' => $data]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil set session",
