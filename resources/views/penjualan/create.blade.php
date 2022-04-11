@@ -11,6 +11,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
 });
 
 // dd(old('tgl', $session_penjualan['tgl']))
+
 @endphp
 
 
@@ -74,15 +75,17 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
         <div class="form-row justify-content-between">
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Bayar</label>
-                <input placeholder="Jumlah Bayar" type="number" class="form-control"
-                    id="bayar" aria-describedby="emailHelp" name="bayar" step="500">
+                <input placeholder="Jumlah Bayar" type="number" class="form-control" id="bayar"
+                    aria-describedby="emailHelp" name="bayar" step="500"
+                    value="{{ old('bayar', $session_penjualan['bayar'] ?? '') }}">
                 <small id="emailHelp" class="form-text text-muted">Jumlah Bayar</small>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Jumlah Kembalian</label>
-                <input placeholder="Jumlah Kembali" type="text" class="form-control"
-                    id="kembali" aria-describedby="emailHelp" name="kembali" readonly>
+                <input placeholder="Jumlah Kembali" type="text" class="form-control" id="kembali"
+                    aria-describedby="emailHelp" name="kembali" readonly
+                    value="{{ old('kembali', $session_penjualan['kembali'] ?? '') }}">
                 <small id="emailHelp" class="form-text text-muted">Jumlah Kembali</small>
             </div>
         </div>
@@ -141,12 +144,17 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             let url = "{{ url('') . '/admin/penjualan/setsession' }}"
             let idpelanggan = $('#pelanggan').val()
             let tgl = $('#tgl').val()
+            let bayar = $("#bayar").val()
+            let kembali = $("#kembali").val()
 
             let value = {
                 idpelanggan,
-                tgl
+                tgl,
+                kembali,
+                bayar
             }
             // console.log(value); return
+            NProgress.start()
             $.ajax({
                 type: "POST",
                 url,
@@ -157,11 +165,13 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 dataType: "JSON",
                 contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                 success: function(res) {
+                    NProgress.done()
                     console.log('success Set SESSION', res)
                     let urlTo = "{{ url('') . '/admin/penjualan/pilihbarang' }}"
                     window.location.href = urlTo
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    NProgress.done()
                     console.log('ERROR Set SESSION', {
                         resText: jqXHR.responseText,
                         textStatus,
@@ -198,11 +208,15 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             // console.log(jml, barang)
         })
 
-        $("#bayar").change(function (e) {
+        $("#bayar").change(function(e) {
             let bayar = $(this).val()
             let grandTotal = calculateGrandTotal()
             let kembali = bayar - grandTotal
-            console.log('masuk bayar change', {bayar,grandTotal, kembali})
+            console.log('masuk bayar change', {
+                bayar,
+                grandTotal,
+                kembali
+            })
             let kembaliFormat = new Intl.NumberFormat().format(kembali)
             $("#kembali").val(kembaliFormat)
         })

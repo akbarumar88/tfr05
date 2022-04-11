@@ -120,6 +120,7 @@ $idbarang_in_cart = $cart->map(function ($el) {
                 // Hapus dari session
                 url = "{{ url('') . '/admin/penjualan/uncentang' }}"
             }
+            NProgress.start()
             $.ajax({
                 type: "POST",
                 url,
@@ -130,9 +131,11 @@ $idbarang_in_cart = $cart->map(function ($el) {
                 dataType: "JSON",
                 contentType: 'application/x-www-form-urlencoded; charset=utf-8',
                 success: function(res) {
+                    NProgress.done()
                     console.log('success centang/uncentang', res)
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    NProgress.done()
                     console.log('ERROR centang/uncentang', {
                         resText: jqXHR.responseText,
                         textStatus,

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/nprogress.css') }}">
     <link rel="shortcut icon" href="{{ asset('front/img/app-logo.jpg') }}" type="image/x-icon">
     <title>POS</title>
     <!-- Font Awesome Script -->
@@ -16,7 +17,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position: relative;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="position: relative;">
         <a class="navbar-brand" href="<?= '' ?>">POS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,6 +188,7 @@
     <!-- Closing Tag Container -->
 
     <script src="<?= asset('front/js/popper.min.js') ?>"></script>
+    <script src="<?= asset('front/js/nprogress.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap-select.min.js') ?>"></script>
     <script src="<?= asset('front/js/script.js') ?>"></script>
