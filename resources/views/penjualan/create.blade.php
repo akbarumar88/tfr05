@@ -111,17 +111,10 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                         @php
                             $subtotal = $barang['jumlah'] * $barang['harga'];
                         @endphp
-                        <tr>
+                        <tr data-value="{{json_encode($barang)}}">
                             <td>
-                                <form action="<?= url('') ?>/admin/penjualan/uncentang" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <input type="hidden" name="id" value="{{ $barang['id'] }}">
-                                    <button onclick="return confirm('Apakah anda yakin ingin menghapus data?')"
-                                        type="submit" class="btn btn-sm btn-danger"><i style=""
-                                            class="fa fa-trash"></i></button>
-                                </form>
+                                <input type="hidden" name="id" value="{{ $barang['id'] }}">
+                                <button type="button" class="btn btn-sm btn-danger hapus"><i style="" class="fa fa-trash"></i></button>
                             </td>
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
@@ -219,6 +212,43 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             })
             let kembaliFormat = new Intl.NumberFormat().format(kembali)
             $("#kembali").val(kembaliFormat)
+        })
+
+        $(".hapus").click(function (e) {
+            let yes = confirm('Apakah anda yakin ingin menghapus data?')
+            if (!yes) return // Jika pilih tidak, maka return
+
+            let trElement = $(this).parent().parent()
+            let barang = trElement.data('value')
+
+            // console.log(barang); return
+            let url = "{{ url('') . '/admin/penjualan/hapusbarang' }}"
+            NProgress.start()
+            $.ajax({
+                type: "POST",
+                url,
+                data: ({
+                    '_token': "{{ csrf_token() }}",
+                    id: barang.id
+                }),
+                dataType: "JSON",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                success: function(res) {
+                    NProgress.done()
+                    console.log('success Hapus Barang', res)
+                    // Hapus dari DOM
+                    trElement.remove()
+                    calculateGrandTotal()
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    NProgress.done()
+                    console.log('ERROR Hapus Barang', {
+                        resText: jqXHR.responseText,
+                        textStatus,
+                        errorThrown
+                    })
+                }
+            });
         })
     </script>
 @endsection

@@ -115,4 +115,22 @@ class PenjualanController extends Controller
             'iduser' => $iduser
         ]);
     }
+
+    public function hapusBarang(Request $request)
+    {
+        $data = $request->all();
+        $iduser = auth()->user()->id;
+        $id = $data['id'];
+
+        $current = collect(session($iduser . '_cart', []));
+        $filtered = $current->filter(function ($el) use ($id)
+        {
+            return $el['id'] != $id;
+        });
+        session([$iduser . '_cart' => $filtered]);
+        return json_encode([
+            'status' => 1,
+            'message' => "Berhasil Hapus Keranjang"
+        ]);
+    }
 }

@@ -67,6 +67,7 @@ Route::get('admin/penjualan/pilihbarang', 'PenjualanController@pilihBarang')->mi
 Route::post('admin/penjualan/centang', 'PenjualanController@centang')->middleware('cek_login');
 Route::post('admin/penjualan/uncentang', 'PenjualanController@uncentang')->middleware('cek_login');
 Route::post('admin/penjualan/setsession', 'PenjualanController@setSession')->middleware('cek_login');
+Route::post('admin/penjualan/hapusbarang', 'PenjualanController@hapusBarang')->middleware('cek_login');
 
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');
