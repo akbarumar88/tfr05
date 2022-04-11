@@ -71,10 +71,14 @@ $cart = collect(session($iduser . '_cart', []));
                         <th>Nama</th>
                         <th>Harga</th>
                         <th>Jumlah</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($cart as $barang)
+                        @php
+                            $subtotal = $barang['jumlah'] * $barang['harga'];
+                        @endphp
                         <tr>
                             <td>
                                 <form action="<?= url('') ?>/admin/penjualan/uncentang" method="POST">
@@ -89,10 +93,11 @@ $cart = collect(session($iduser . '_cart', []));
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
                             <td>
-                                <input type="number" value="{{ $barang['jumlah'] }}" class="form-control"
-                                    style="width:auto">
+                                <input type="number" value="{{ $barang['jumlah'] }}" class="form-control cart-jumlah"
+                                    style="width:auto" data-value="{{json_encode($barang)}}">
                                 {{-- <p>{{ $barang['jumlah'] }}</p> --}}
                             </td>
+                            <td class="cart-subtotal">{{ number_format($subtotal) }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -134,6 +139,16 @@ $cart = collect(session($iduser . '_cart', []));
                     })
                 }
             });
+        })
+
+        $(".cart-jumlah").change(function (e) {
+            let barang = $(this).data('value')
+            let jml = e.target.value
+            let subtotal = barang.harga * jml
+            subtotal = new Intl.NumberFormat().format(subtotal)
+
+            $(this).parent().siblings(".cart-subtotal").html(subtotal)
+            // console.log(jml, barang)
         })
     </script>
 @endsection
