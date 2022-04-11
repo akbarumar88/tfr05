@@ -71,6 +71,22 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             </div>
         </div>
 
+        <div class="form-row justify-content-between">
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">Jumlah Bayar</label>
+                <input placeholder="Jumlah Bayar" type="number" class="form-control"
+                    id="bayar" aria-describedby="emailHelp" name="bayar" step="500">
+                <small id="emailHelp" class="form-text text-muted">Jumlah Bayar</small>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="exampleInputEmail1">Jumlah Kembalian</label>
+                <input placeholder="Jumlah Kembali" type="text" class="form-control"
+                    id="kembali" aria-describedby="emailHelp" name="kembali" readonly>
+                <small id="emailHelp" class="form-text text-muted">Jumlah Kembali</small>
+            </div>
+        </div>
+
         <a href="#" class="btn btn-success" id="pilihbarang"><i class="fa fa-plus"></i>
             Barang</a>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
@@ -165,9 +181,10 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 grandTotal += subtotal
                 // console.log(el)
             })
-            grandTotal = new Intl.NumberFormat().format(grandTotal)
-            console.log(grandTotal)
-            $('#grandtotal').html(grandTotal)
+            let grandTotalFormat = new Intl.NumberFormat().format(grandTotal)
+            // console.log(grandTotal)
+            $('#grandtotal').html(grandTotalFormat)
+            return grandTotal
         }
 
         $(".cart-jumlah").change(function(e) {
@@ -179,6 +196,15 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             $(this).parent().siblings(".cart-subtotal").html(subtotal)
             calculateGrandTotal()
             // console.log(jml, barang)
+        })
+
+        $("#bayar").change(function (e) {
+            let bayar = $(this).val()
+            let grandTotal = calculateGrandTotal()
+            let kembali = bayar - grandTotal
+            console.log('masuk bayar change', {bayar,grandTotal, kembali})
+            let kembaliFormat = new Intl.NumberFormat().format(kembali)
+            $("#kembali").val(kembaliFormat)
         })
     </script>
 @endsection
