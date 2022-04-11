@@ -61,6 +61,14 @@ Route::post('admin/pelanggan/exportpdf', 'PelangganController@exportPDF')->middl
 Route::get('admin/pelanggan/previewpdf', 'PelangganController@previewPDF')->middleware('cek_login');
 Route::post('admin/pelanggan/exportexcel', 'PelangganController@exportExcel')->middleware('cek_login');
 
+// Routing Transaksi Penjualan
+Route::get('admin/penjualan', 'PenjualanController@create')->middleware('cek_login');
+Route::get('admin/penjualan/pilihbarang', 'PenjualanController@pilihBarang')->middleware('cek_login');
+Route::post('admin/penjualan/centang', 'PenjualanController@centang')->middleware('cek_login');
+Route::post('admin/penjualan/uncentang', 'PenjualanController@uncentang')->middleware('cek_login');
+Route::post('admin/penjualan/setsession', 'PenjualanController@setSession')->middleware('cek_login');
+Route::post('admin/penjualan/hapusbarang', 'PenjualanController@hapusBarang')->middleware('cek_login');
+
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');
 // Menampilkan Logo UPN & Kata-kata

@@ -216,7 +216,7 @@ class BarangController extends Controller
         $log = [
             'iduser' => Auth::user()->id,
             'menu' => 'Barang',
-            'keterangan' => 'Mengahpus barang',
+            'keterangan' => 'Menghapus barang',
             'before' => json_encode($before),
             'after' => '',
         ];

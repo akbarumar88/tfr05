@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap-select.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('front/css/nprogress.css') }}">
     <link rel="shortcut icon" href="{{ asset('front/img/app-logo.jpg') }}" type="image/x-icon">
     <title>POS</title>
     <!-- Font Awesome Script -->
@@ -16,7 +17,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="position: relative;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info" style="position: relative;">
         <a class="navbar-brand" href="<?= '' ?>">POS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
             aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,8 +164,8 @@
             {{-- Menu-menu Transaksi --}}
             <div class="sidebar-section-group border-top border-bottom border-light">
                 <p class="sidebar-section-category mb-2">TRANSAKSI</p>
-                <a href="<?= url('') ?>/admin/kategori"
-                    class="d-block py-2 {{ Request::is('admin/kategori') ? 'active' : '' }}">
+                <a href="<?= url('') ?>/admin/penjualan"
+                    class="d-block py-2 {{ Request::is('admin/penjualan') ? 'active' : '' }}">
                     {{-- <i class="fa fa-chart-bar menu-icon"></i> --}}
                     <i class="fa fa-solid fa-cash-register menu-icon"></i>
                     <p class="sidebar-item mb-0 d-inline">Penjualan</p>
@@ -187,6 +188,7 @@
     <!-- Closing Tag Container -->
 
     <script src="<?= asset('front/js/popper.min.js') ?>"></script>
+    <script src="<?= asset('front/js/nprogress.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap.bundle.min.js') ?>"></script>
     <script src="<?= asset('front/js/bootstrap-select.min.js') ?>"></script>
     <script src="<?= asset('front/js/script.js') ?>"></script>
