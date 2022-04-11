@@ -50,13 +50,13 @@ $cart = collect(session('cart', []));
 
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Tanggal</label>
-                <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="exampleInputEmail1"
-                    aria-describedby="emailHelp" name="tgl" value="{{ date('Y-m-d') }}">
+                <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="tgl" aria-describedby="emailHelp"
+                    name="tgl" value="{{ date('Y-m-d') }}">
                 <small id="emailHelp" class="form-text text-muted">Tanggal Transaksi</small>
             </div>
         </div>
 
-        <a href="{{ url('') . '/admin/penjualan/pilihbarang' }}" class="btn btn-success"><i class="fa fa-plus"></i>
+        <a href="#" class="btn btn-success" id="pilihbarang"><i class="fa fa-plus"></i>
             Obat</a>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Simpan</button>
 
@@ -85,7 +85,8 @@ $cart = collect(session('cart', []));
                         <td>{{ $barang['nama'] }}</td>
                         <td>{{ number_format($barang['harga']) }}</td>
                         <td>
-                            <input type="number" value="{{ $barang['jumlah'] }}" class="form-control" style="width:auto">
+                            <input type="number" value="{{ $barang['jumlah'] }}" class="form-control"
+                                style="width:auto">
                             {{-- <p>{{ $barang['jumlah'] }}</p> --}}
                         </td>
                     </tr>
@@ -93,4 +94,41 @@ $cart = collect(session('cart', []));
             </tbody>
         </table>
     </form>
+
+    <script>
+        $('#pilihbarang').click(function(e) {
+            // Simpan Current Data ke Session
+            let url = "{{ url('') . '/admin/penjualan/setsession' }}"
+            let idpelanggan = $('#pelanggan').val()
+            let tgl = $('#tgl').val()
+
+            let value = {
+                idpelanggan,
+                tgl
+            }
+            // console.log(value); return
+            $.ajax({
+                type: "POST",
+                url,
+                data: ({
+                    '_token': "{{ csrf_token() }}",
+                    ...value
+                }),
+                dataType: "JSON",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                success: function(res) {
+                    console.log('success Set SESSION', res)
+                    let urlTo = "{{ url('') . '/admin/penjualan/setsession' }}"
+                    // window.location.href = urlTo
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log('ERROR Set SESSION', {
+                        resText: jqXHR.responseText,
+                        textStatus,
+                        errorThrown
+                    })
+                }
+            });
+        })
+    </script>
 @endsection

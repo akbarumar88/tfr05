@@ -24,21 +24,21 @@ class PenjualanController extends Controller
         $entri = request('entri', 10);
 
         $barang = Barang::select(
-                "barang.id",
-                "kategori.kategori as kategori",
-                "barang.nama",
-                "barang.harga",
-                "barang.stock",
-                "barang.created_at",
-                "barang.updated_at"
-            )->join("kategori", "kategori.id", "=", "barang.idkategori")
+            "barang.id",
+            "kategori.kategori as kategori",
+            "barang.nama",
+            "barang.harga",
+            "barang.stock",
+            "barang.created_at",
+            "barang.updated_at"
+        )->join("kategori", "kategori.id", "=", "barang.idkategori")
             ->when(!empty($cari), function ($query) use ($cari) {
                 return $query->where('nama', 'like', "%$cari%");
             })
             ->paginate($entri)
             ->withQueryString();
         // if ($cari) {
-            
+
         // } else {
         //     $barang = barang::select(
         //         "barang.id",
@@ -71,10 +71,16 @@ class PenjualanController extends Controller
         // ];
 
         $barang = $request->all();
-        $current = session('cart', []); // Getting old data
-        
+        $iduser = auth()->user()->id;
+        $session_penjualan = session($iduser . '_penjualan', []); // Getting old data
+        if (empty($session_penjualan['cart'])) {
+            $current = [];
+        } else {
+            $current = $session_penjualan['cart'];
+        }
+
         $current[] = array_merge($barang, ['jumlah' => 1]); // Push new data
-        session(['cart' => $current]);
+        session([$iduser . '_penjualan' => array_merge($session_penjualan, ['cart' => $current])]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil centang"
@@ -84,16 +90,31 @@ class PenjualanController extends Controller
     public function uncentang(Request $request)
     {
         $barang = $request->all();
-        $current = collect(session('cart', [])); // Getting old data
-        
-        $filtered = $current->filter(function ($el) use ($barang)
-        {
+        $iduser = auth()->user()->id;
+        $session_penjualan = session($iduser . '_penjualan', []); // Getting old data
+        $current = collect($session_penjualan['cart']); // Getting old data
+
+        $filtered = $current->filter(function ($el) use ($barang) {
             return $el['id'] != $barang['id'];
         });
-        session(['cart' => $filtered->all()]);
+        session([$iduser . '_penjualan' => array_merge($session_penjualan, ['cart' => $filtered->all()])]);
         return json_encode([
             'status' => 1,
             'message' => "Berhasil Uncentang"
+        ]);
+    }
+
+    public function setSession(Request $request)
+    {
+        $data = $request->all();
+        $iduser = auth()->user()->id;
+
+        session(["{$iduser}_penjualan" => $data]);
+        return json_encode([
+            'status' => 1,
+            'message' => "Berhasil set session",
+            'data' => $data,
+            'iduser' => $iduser
         ]);
     }
 }
