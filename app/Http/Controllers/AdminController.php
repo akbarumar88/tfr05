@@ -30,11 +30,19 @@ class AdminController extends Controller
             ->orderBy('terjual', 'desc')
             ->limit(10)
             ->get(['idbarang', DB::raw('SUM(pd.jumlah) as terjual'), 'b2.nama']);
-        // dd($barangTerlaris);
+
+        $customerLoyal = DB::table('penjualan', 'pj')
+            ->join('pelanggan as p', 'p.id', '=', 'pj.idpelanggan')
+            ->groupBy(['pj.idpelanggan', 'p.nama'])
+            ->orderBy('jml_transaksi', 'desc')
+            ->limit(10)
+            ->get(['pj.idpelanggan', DB::raw('count(pj.id) as jml_transaksi'), 'p.nama']);
+        // dd($customerLoyal);
         return view('admin.index', [
             'barang' => $barangUrutStok,
             'kategori' => $kategoriUrutStok,
-            'barangTerlaris' => $barangTerlaris
+            'barangTerlaris' => $barangTerlaris,
+            'customerLoyal' => $customerLoyal,
         ]);
     }
 

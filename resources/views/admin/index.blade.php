@@ -3,10 +3,14 @@
 @section('content')
     <h3 class="mb-4">Admin Dashboard</h3>
 
+    {{-- Container Untuk Diagram Batang --}}
     <div id="myVizzu" style="width:800px; height:480px;"></div>
 
     <!-- Container untuk Diagram Lingkaran -->
     <div id="vizzuRadial" style="width:800px; height:480px;"></div>
+
+    {{-- Container Untuk Diagram Batang Customer Loyalty --}}
+    <div id="diag-customer" style="width:800px; height:480px;"></div>
 
 
     <!-- <script type="module">
@@ -18,6 +22,7 @@
             let barangUrutPengadaan = {!! json_encode($barang) !!}
             let kategoriUrutPengadaan = {!! json_encode($kategori) !!}
             let barangTerlaris = {!! json_encode($barangTerlaris)  !!}
+            let customerLoyal = {!! json_encode($customerLoyal)  !!}
             // console.log({barangUrutPengadaan,kategoriUrutPengadaan})
 
             // Data By Series
@@ -123,6 +128,43 @@
                     }
                 }
             });
+
+            // Data By Series
+            let dataSampleCustomer = {
+                series: [{
+                        name: 'Pelanggan',
+                        type: 'dimension',
+                        values: customerLoyal.map(el => el.nama)
+                    },
+                    {
+                        name: 'Transaksi',
+                        type: 'measure',
+                        values: customerLoyal.map(el => el.jml_transaksi)
+                    },
+                ]
+            };
+            // console.log(dataSampleCustomer)
+
+            // Inisialisasi chart Vizzu
+            let chartCustomer = new Vizzu('diag-customer', {
+                data: dataSampleCustomer
+            })
+            chartCustomer.animate({
+                x: 'Pelanggan',
+                y: 'Transaksi',
+                geometry: 'line',
+            });
+            chartCustomer.animate({
+                config: {
+                    title: 'Data Customer Loyalty',
+                    channels: {
+                        label: {
+                            attach: ['Transaksi']
+                        }
+                    },
+                }
+            })
+
             let i = 0
             setInterval(() => {
                 let geometryChart1
@@ -136,6 +178,9 @@
                 }
                 // Animasikan chart 1 (Batang)
                 chart.animate({
+                    geometry: geometryChart1,
+                });
+                chartCustomer.animate({
                     geometry: geometryChart1,
                 });
                 // Animasikan chart 2 (Lingkaran / Kartesius)
