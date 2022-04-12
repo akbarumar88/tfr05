@@ -216,4 +216,32 @@ class PenjualanController extends Controller
             'message' => "Berhasil Hapus Keranjang"
         ]);
     }
+
+    public function cekStok(Request $request)
+    {
+        $stokCukup = true;
+        $message='';
+        $data = $request->data;
+        foreach ($data as $item) {
+            $id = $item['id'];
+            $jml = $item['jml'];
+            $nama = $item['nama'];
+
+            $barang = DB::table('barang')
+                ->where('id', '=', $id)
+                // ->where('stock', '>=', $jml)
+                ->get(['id', 'stock']);
+            $stok = $barang[0]->stock;
+            if ($stok < $jml) {
+                $stokCukup=false;
+                $message="Stok tidak cukup untuk barang {$nama}, stok tersisa {$stok}";
+                break;
+            }
+        }
+        return json_encode([
+            'status' => $stokCukup ? 1 : 0,
+            'message' => $message,
+            'data' => $data
+        ]);
+    }
 }

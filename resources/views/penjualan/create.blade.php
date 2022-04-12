@@ -131,9 +131,9 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
                             <td>
-                                <input type="number" value="{{ old('jumlah_'.$barang['id'], $barang['jumlah']) }}" class="form-control cart-jumlah"
-                                    style="width:auto" data-value="{{ json_encode($barang) }}"
-                                    name="jumlah_{{ $barang['id'] }}" min="1">
+                                <input type="number" value="{{ old('jumlah_' . $barang['id'], $barang['jumlah']) }}"
+                                    class="form-control cart-jumlah" style="width:auto"
+                                    data-value="{{ json_encode($barang) }}" name="jumlah_{{ $barang['id'] }}" min="1">
                                 {{-- <p>{{ $barang['jumlah'] }}</p> --}}
                             </td>
                             <td class="cart-subtotal">{{ number_format($subtotal) }}</td>
@@ -304,6 +304,51 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 alert("Uang Tunai Kurang!")
                 return false
             }
+
+            // Cek Stok Tidak Cukup
+            let barangCek = []
+            $(".cart-jumlah").each(function(e) {
+                let jml = $(this).val()
+                let id = $(this).data('value').id
+                let nama = $(this).data('value').nama
+                barangCek = [...barangCek, {
+                    id,
+                    jml,
+                    nama
+                }]
+            })
+
+            e.preventDefault() // Prevent Form agar tidak ter-submit
+            NProgress.start()
+            $.ajax({
+                type: "POST",
+                url: "{{ url('') . '/admin/penjualan/cekstok' }}",
+                data: ({
+                    '_token': "{{ csrf_token() }}",
+                    data: barangCek
+                }),
+                dataType: "JSON",
+                contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+                success: function(res) {
+                    NProgress.done()
+                    console.log('success Cek Stok', res)
+                    const {status,message} = res
+                    if (status==0){
+                        alert(message)
+                    }else{
+                        e.target.submit()
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    NProgress.done()
+                    console.log('ERROR Cek Stok', {
+                        resText: jqXHR.responseText,
+                        textStatus,
+                        errorThrown
+                    })
+                }
+            });
+            // console.log(barangCek)
 
             // return false
         })
