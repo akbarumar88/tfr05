@@ -33,7 +33,7 @@
                         values: barangTerlaris.map(el => {
                             let nama = el.nama
                             let namaSplit = nama.split(' ')
-                            return `${namaSplit[0]} ${namaSplit[1]}${namaSplit.length>2?'...':''}`
+                            return `${namaSplit[0]} ${namaSplit[1]??''}${namaSplit.length>2?'...':''}`
                         })
                     },
                     {
@@ -72,7 +72,11 @@
                 series: [{
                         name: 'Barang',
                         type: 'dimension',
-                        values: barangUrutPengadaan.map(el => el.nama)
+                        values: barangUrutPengadaan.map(el => {
+                            let nama = el.nama
+                            let namaSplit = nama.split(' ')
+                            return `${namaSplit[0]} ${namaSplit[1]??''}${namaSplit.length>2?'...':''}`
+                        })
                     },
                     {
                         name: 'Stok',
@@ -141,7 +145,7 @@
                         values: customerLoyal.map(el => {
                             let nama = el.nama
                             let namaSplit = nama.split(' ')
-                            return `${namaSplit[0]} ${namaSplit[1]}${namaSplit.length>2?'...':''}`
+                            return `${namaSplit[0]} ${namaSplit[1]??''}${namaSplit.length>2?'...':''}`
                         })
                     },
                     {
