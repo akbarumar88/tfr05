@@ -79,7 +79,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Tanggal</label>
                 <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="tgl" aria-describedby="emailHelp"
-                    name="tgl" value="{{ old('tgl', $session_penjualan['tgl'] ?? '') }}">
+                    name="tgl" value="{{ old('tgl', $session_penjualan['tgl'] ?? date('Y-m-d')) }}">
                 <small id="emailHelp" class="form-text text-muted">Tanggal Transaksi</small>
             </div>
         </div>

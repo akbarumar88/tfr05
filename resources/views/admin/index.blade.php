@@ -4,13 +4,13 @@
     <h3 class="mb-4">Admin Dashboard</h3>
 
     {{-- Container Untuk Diagram Batang --}}
-    <div id="myVizzu" style="width:800px; height:480px;"></div>
+    <div id="myVizzu" style="height:512px;"></div>
 
     <!-- Container untuk Diagram Lingkaran -->
-    <div id="vizzuRadial" style="width:800px; height:480px;"></div>
+    <div id="vizzuRadial" style="height:512px;"></div>
 
     {{-- Container Untuk Diagram Batang Customer Loyalty --}}
-    <div id="diag-customer" style="width:800px; height:480px;"></div>
+    <div id="diag-customer" style="height:512px;"></div>
 
 
     <!-- <script type="module">
@@ -21,8 +21,8 @@
         (async () => {
             let barangUrutPengadaan = {!! json_encode($barang) !!}
             let kategoriUrutPengadaan = {!! json_encode($kategori) !!}
-            let barangTerlaris = {!! json_encode($barangTerlaris)  !!}
-            let customerLoyal = {!! json_encode($customerLoyal)  !!}
+            let barangTerlaris = {!! json_encode($barangTerlaris) !!}
+            let customerLoyal = {!! json_encode($customerLoyal) !!}
             // console.log({barangUrutPengadaan,kategoriUrutPengadaan})
 
             // Data By Series
@@ -30,7 +30,11 @@
                 series: [{
                         name: 'Barang',
                         type: 'dimension',
-                        values: barangTerlaris.map(el => el.nama)
+                        values: barangTerlaris.map(el => {
+                            let nama = el.nama
+                            let namaSplit = nama.split(' ')
+                            return `${namaSplit[0]} ${namaSplit[1]}${namaSplit.length>2?'...':''}`
+                        })
                     },
                     {
                         name: 'Terjual',
@@ -134,7 +138,11 @@
                 series: [{
                         name: 'Pelanggan',
                         type: 'dimension',
-                        values: customerLoyal.map(el => el.nama)
+                        values: customerLoyal.map(el => {
+                            let nama = el.nama
+                            let namaSplit = nama.split(' ')
+                            return `${namaSplit[0]} ${namaSplit[1]}${namaSplit.length>2?'...':''}`
+                        })
                     },
                     {
                         name: 'Transaksi',
