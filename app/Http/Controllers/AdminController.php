@@ -22,10 +22,19 @@ class AdminController extends Controller
             ->groupBy(['b.idkategori', 'k.kategori'])
             ->orderBy('jumlah_stok', 'desc')
             ->get(['b.idkategori', 'k.kategori', DB::raw('sum(b.stock) as jumlah_stok')]);
-        // dd($kategoriUrutStok);
+
+        // Mengambil Data Barang Terlaris.
+        $barangTerlaris = DB::table('penjualan_detail', 'pd')
+            ->join('barang as b2', 'b2.id', '=', 'pd.idbarang')
+            ->groupBy(['pd.idbarang', 'b2.nama'])
+            ->orderBy('terjual', 'desc')
+            ->limit(10)
+            ->get(['idbarang', DB::raw('COUNT(pd.id) as terjual'), 'b2.nama']);
+        // dd($barangTerlaris);
         return view('admin.index', [
             'barang' => $barangUrutStok,
-            'kategori' => $kategoriUrutStok
+            'kategori' => $kategoriUrutStok,
+            'barangTerlaris' => $barangTerlaris
         ]);
     }
 

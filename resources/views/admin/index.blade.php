@@ -17,19 +17,20 @@
         (async () => {
             let barangUrutPengadaan = {!! json_encode($barang) !!}
             let kategoriUrutPengadaan = {!! json_encode($kategori) !!}
+            let barangTerlaris = {!! json_encode($barangTerlaris)  !!}
             // console.log({barangUrutPengadaan,kategoriUrutPengadaan})
 
             // Data By Series
             let dataSample = {
                 series: [{
-                        name: 'Kategori',
+                        name: 'Barang',
                         type: 'dimension',
-                        values: kategoriUrutPengadaan.map(el => el.kategori)
+                        values: barangTerlaris.map(el => el.nama)
                     },
                     {
-                        name: 'Stok',
+                        name: 'Terjual',
                         type: 'measure',
-                        values: kategoriUrutPengadaan.map(el => el.jumlah_stok)
+                        values: barangTerlaris.map(el => el.terjual)
                     },
                 ]
             };
@@ -40,16 +41,16 @@
                 data: dataSample
             })
             chart.animate({
-                x: 'Kategori',
-                y: 'Stok',
+                x: 'Barang',
+                y: 'Terjual',
                 geometry: 'line',
             });
             chart.animate({
                 config: {
-                    title: 'Data Pengadaan Stok Kategori Terbanyak',
+                    title: 'Data Penjualan Barang Terlaris',
                     channels: {
                         label: {
-                            attach: ['Stok']
+                            attach: ['Terjual']
                         }
                     },
                 }
