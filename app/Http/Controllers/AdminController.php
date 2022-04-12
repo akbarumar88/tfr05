@@ -29,7 +29,7 @@ class AdminController extends Controller
             ->groupBy(['pd.idbarang', 'b2.nama'])
             ->orderBy('terjual', 'desc')
             ->limit(10)
-            ->get(['idbarang', DB::raw('COUNT(pd.id) as terjual'), 'b2.nama']);
+            ->get(['idbarang', DB::raw('SUM(pd.jumlah) as terjual'), 'b2.nama']);
         // dd($barangTerlaris);
         return view('admin.index', [
             'barang' => $barangUrutStok,
