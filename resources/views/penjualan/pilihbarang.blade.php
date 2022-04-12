@@ -45,7 +45,7 @@ $idbarang_in_cart = $cart->map(function ($el) {
                 <div class="d-flex align-items-center">
                     <p class="mb-0">Menampilkan</p>
 
-                    <form action="<?= url('') ?>/admin/barang" class="mx-2">
+                    <form action="<?= url('') ?>/admin/penjualan/pilihbarang" class="mx-2">
                         <input type="hidden" name="page" value="{{ request('page') }}">
                         <input type="hidden" name="entri" value="{{ request('q') }}">
                         <select onchange="this.form.submit()" name="entri" id="" class="form-control py-0 px-2">
@@ -58,8 +58,8 @@ $idbarang_in_cart = $cart->map(function ($el) {
                 </div>
                 <div class="d-flex align-items-center">
                     <p class="mb-0 mr-2">Pencarian: </p>
-                    <form action="<?= url('') ?>/admin/barang" method="get">
-                        <input type="hidden" name="page" value="{{ request('page') }}">
+                    <form action="<?= url('') ?>/admin/penjualan/pilihbarang" method="get">
+                        <input type="hidden" name="page" value="1">
                         <input type="hidden" name="entri" value="{{ request('entri') }}">
                         <input type="text" name="q" id="" class="form-control" value="{{ request('q') }}" />
                     </form>
@@ -89,7 +89,7 @@ $idbarang_in_cart = $cart->map(function ($el) {
                             <th scope="row">{{ $offset + $i + 1 }}</th>
                             <td>{{ $barang['kategori'] }}</td>
                             <td>{{ $barang['nama'] }}</td>
-                            <td>{{ $barang['harga'] }}</td>
+                            <td>{{ number_format($barang['harga']) }}</td>
                             <td>{{ $barang['stock'] }}</td>
                             <td>
                                 <div class="form-check">

@@ -18,6 +18,18 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
 @extends('layout')
 
 @section('content')
+    @if (session()->has('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <style>
         #cart td,
         #cart th {
@@ -28,7 +40,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
 
     <h3 class="mb-3">Penjualan Barang</h3>
 
-    <form method="POST" action="{{ url('') }}/admin/kategori" id="penjualan">
+    <form method="POST" action="{{ url('') }}/admin/penjualan" id="penjualan">
         @csrf
 
         <input type="hidden" name="iduser" value="{{ auth()->user()->id }}">
@@ -45,7 +57,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 <select name="idpelanggan" id="pelanggan" aria-describedby="pelangganHelp" class="form-control">
                     @foreach ($pelanggan as $item)
                         @php
-                            $selected = old('idpelanggan', $session_penjualan['idpelanggan']);
+                            $selected = old('idpelanggan', $session_penjualan['idpelanggan'] ?? '');
                             $isSelected = $item->id == $selected ? 'selected' : '';
                         @endphp
                         <option value="{{ $item->id }}" {{ $isSelected }}>{{ $item->nama }}</option>
@@ -67,7 +79,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
             <div class="form-group col-md-6">
                 <label for="exampleInputEmail1">Tanggal</label>
                 <input type="date" max="{{ date('Y-m-d') }}" class="form-control" id="tgl" aria-describedby="emailHelp"
-                    name="tgl" value="{{ old('tgl', $session_penjualan['tgl']) }}">
+                    name="tgl" value="{{ old('tgl', $session_penjualan['tgl'] ?? '') }}">
                 <small id="emailHelp" class="form-text text-muted">Tanggal Transaksi</small>
             </div>
         </div>
@@ -119,8 +131,9 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                             <td>{{ $barang['nama'] }}</td>
                             <td>{{ number_format($barang['harga']) }}</td>
                             <td>
-                                <input type="number" value="{{ $barang['jumlah'] }}" class="form-control cart-jumlah"
-                                    style="width:auto" data-value="{{ json_encode($barang) }}">
+                                <input type="number" value="{{ old('jumlah_'.$barang['id'], $barang['jumlah']) }}" class="form-control cart-jumlah"
+                                    style="width:auto" data-value="{{ json_encode($barang) }}"
+                                    name="jumlah_{{ $barang['id'] }}" min="1">
                                 {{-- <p>{{ $barang['jumlah'] }}</p> --}}
                             </td>
                             <td class="cart-subtotal">{{ number_format($subtotal) }}</td>
@@ -132,6 +145,8 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
     </form>
 
     <script>
+        let cartLen = {!! json_encode($cart->count()) !!};
+
         $('#pilihbarang').click(function(e) {
             // Simpan Current Data ke Session
             let url = "{{ url('') . '/admin/penjualan/setsession' }}"
@@ -198,6 +213,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
 
             $(this).parent().siblings(".cart-subtotal").html(subtotal)
             calculateGrandTotal()
+            calculateKembalian()
             // console.log(jml, barang)
         })
 
@@ -244,6 +260,7 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                     trElement.remove()
                     calculateGrandTotal()
                     calculateKembalian()
+                    cartLen -= 1
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     NProgress.done()
@@ -269,6 +286,11 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 bayar,
                 kembali
             });
+
+            if (!cartLen) {
+                alert("Keranjang kosong, silakan pilih barang yang akan dibeli")
+                return false
+            }
             if (tgl == null || tgl == "") {
                 alert("Harap Isi Tanggal")
                 return false
@@ -282,7 +304,8 @@ $cart->each(function ($barang, $i) use (&$grandTotal) {
                 alert("Uang Tunai Kurang!")
                 return false
             }
-            return false
+
+            // return false
         })
     </script>
 @endsection

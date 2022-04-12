@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Pelanggan;
+use App\Models\Penjualan;
+use App\Models\PenjualanDetail;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
@@ -12,7 +17,7 @@ class PenjualanController extends Controller
     public function create()
     {
         $iduser = auth()->user()->id;
-        $head = session($iduser.'_penjualan');
+        $head = session($iduser . '_penjualan');
         // dd($head);
         // session(['cart' => []]);
         // dd(session('cart'));
@@ -20,6 +25,85 @@ class PenjualanController extends Controller
         return view('penjualan.create', [
             'pelanggan' => $pelanggan
         ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $iduser = auth()->user()->id;
+        $cart = collect(session($iduser . '_cart', []));
+        $cart = $cart->map(function ($item) use ($request) {
+            $item['jumlah'] = $request->input("jumlah_" . $item['id']);
+            return $item;
+        });
+
+        $head = new Penjualan();
+
+        $head->iduser = $iduser;
+        $head->idpelanggan = $request->input("idpelanggan");
+        $head->tgl = $request->input("tgl");
+        $head->nofaktur = $this->getNofaktur();
+        $head->bayar = $request->input("bayar");
+        $head->kembali = str_replace(",", "", $request->input("kembali"));
+        // dd($request->all(), $cart, $head);
+        $after = [
+            'nofaktur' => $head->nofaktur,
+        ];
+
+        $log = [
+            'iduser' => $iduser,
+            'menu' => 'Penjualan',
+            'keterangan' => 'Melakukan Penjualan',
+            'before' => '',
+            'after' => json_encode($after),
+        ];
+
+        DB::beginTransaction();
+        try {
+            //code...
+            $head->save();
+            $idpenjualan = $head->id;
+            $cart->each(function ($item) use ($idpenjualan) {
+                $detail = new PenjualanDetail();
+                $detail->idpenjualan = $idpenjualan;
+                $detail->idbarang = $item['id'];
+                $detail->harga = $item['harga'];
+                $detail->jumlah = $item['jumlah'];
+                $detail->subtotal = $item['harga'] * $item['jumlah'];
+                $detail->save();
+                // PenjualanDetail::create([
+                //     'idpenjualan' => $idpenjualan,
+                //     'idbarang' => $item['id'],
+                //     'harga' => $item['harga'],
+                //     'jumlah' => $item['jumlah']
+                // ]);
+            });
+
+            DB::table('log_user')->insert($log);
+            DB::commit();
+            // Clear Session
+            session([$iduser . '_cart' => []]);
+            session([$iduser . '_penjualan' => []]);
+            return redirect('/admin/penjualan')->with('success', 'Penjualan berhasil');
+        } catch (Exception $th) {
+            DB::rollBack();
+            return redirect('/admin/penjualan')->with('error', 'Terjadi Kesalahan saat melakukan Penjualan ' . $th->getMessage());
+        }
+    }
+
+    protected function getNoFaktur()
+    {
+        $now = date('Y-m-d');
+        $data = DB::select("SELECT IF(ISNULL(MAX(nofaktur)),\"0001\",LPAD(CONVERT(RIGHT(MAX(nofaktur), 4), UNSIGNED INT)+1, 4, 0))AS nofaktur
+            FROM penjualan WHERE tgl BETWEEN \"$now 00:00:00\" AND \"$now 23:59:59\"");
+        $urut = $data[0]->nofaktur;
+        $tgl = date('Ymd');
+        return "PJ" . $tgl . $urut;
     }
 
     public function pilihBarang()
@@ -123,8 +207,7 @@ class PenjualanController extends Controller
         $id = $data['id'];
 
         $current = collect(session($iduser . '_cart', []));
-        $filtered = $current->filter(function ($el) use ($id)
-        {
+        $filtered = $current->filter(function ($el) use ($id) {
             return $el['id'] != $id;
         });
         session([$iduser . '_cart' => $filtered]);

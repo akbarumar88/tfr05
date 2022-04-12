@@ -63,6 +63,7 @@ Route::post('admin/pelanggan/exportexcel', 'PelangganController@exportExcel')->m
 
 // Routing Transaksi Penjualan
 Route::get('admin/penjualan', 'PenjualanController@create')->middleware('cek_login');
+Route::post('admin/penjualan', 'PenjualanController@store')->middleware('cek_login');
 Route::get('admin/penjualan/pilihbarang', 'PenjualanController@pilihBarang')->middleware('cek_login');
 Route::post('admin/penjualan/centang', 'PenjualanController@centang')->middleware('cek_login');
 Route::post('admin/penjualan/uncentang', 'PenjualanController@uncentang')->middleware('cek_login');
