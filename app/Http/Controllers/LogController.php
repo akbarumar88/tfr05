@@ -18,6 +18,8 @@ class LogController extends Controller
             "user.nama as user",
             "log_user.menu",
             "log_user.keterangan",
+            "log_user.before",
+            "log_user.after",
             "log_user.created_at",
         )->join("user", "user.id", "=", "log_user.iduser")
             ->when(!empty($cari), function ($query) use ($cari) {
@@ -45,6 +47,8 @@ class LogController extends Controller
             "user.nama as user",
             "log_user.menu",
             "log_user.keterangan",
+            "log_user.before",
+            "log_user.after",
             "log_user.created_at",
         )->join("user", "user.id", "=", "log_user.iduser")
             ->where('menu', 'like', "%$cari%")->get();

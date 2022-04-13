@@ -11,6 +11,8 @@
                 <th>User</th>
                 <th>Menu</th>
                 <th>Keterangan</th>
+                {{-- <th>before</th>
+                <th>after</th> --}}
                 <th>Waktu</th>
             </tr>
         </thead>
@@ -21,6 +23,8 @@
                     <td>{{ $log['user'] }}</td>
                     <td>{{ $log['menu'] }}</td>
                     <td>{{ $log['keterangan'] }}</td>
+                    {{-- <td>{{ $log['before'] }}</td>
+                    <td>{{ $log['after'] }}</td> --}}
                     <td>{{ $log['created_at'] }}</td>
                 </tr>
             @endforeach

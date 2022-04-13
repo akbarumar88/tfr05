@@ -68,16 +68,25 @@ $offset = ($currentPage - 1) * $entri;
                         <th scope="col">User</th>
                         <th scope="col">Menu</th>
                         <th scope="col">Keterangan</th>
+                        {{-- <th scope="col">Before</th>
+                        <th scope="col">After</th> --}}
                         <th scope="col">Waktu</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $i => $log)
+                        {{-- @php 
+                            $before = json_decode($log['before'], true);
+                            $after = json_decode($log['after'], true);
+                            dd($log['before']);
+                        @endphp --}}
                         <tr>
                             <th scope="row">{{ $offset + $i + 1 }}</th>
                             <td>{{ $log['user'] }}</td>
                             <td>{{ $log['menu'] }}</td>
                             <td>{{ $log['keterangan'] }}</td>
+                            {{-- <td>{{ $log['before'] }}</td>
+                            <td>{{ $log['after'] }}</td> --}}
                             <td>{{ $log['created_at'] }}</td>
                             {{-- <td>
                                 <div class="d-flex">
