@@ -172,6 +172,17 @@
                 </a>
             </div>
 
+            {{-- Menu Logging --}}
+            <div class="sidebar-section-group border-top border-bottom border-light">
+                <p class="sidebar-section-category mb-2">LOGGING</p>
+                <a href="<?= url('') ?>/admin/log"
+                    class="d-block py-2 {{ Request::is('admin/log') ? 'active' : '' }}">
+                    {{-- <i class="fa fa-chart-bar menu-icon"></i> --}}
+                    <i class="fa fa-solid fa-book menu-icon"></i>
+                    <p class="sidebar-item mb-0 d-inline">Log User</p>
+                </a>
+            </div>
+
             {{-- <p class="text-white">Test Sidebar.</p> --}}
         </div>
         <div id="main" style="flex:0.85">

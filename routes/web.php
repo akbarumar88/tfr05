@@ -71,6 +71,9 @@ Route::post('admin/penjualan/setsession', 'PenjualanController@setSession')->mid
 Route::post('admin/penjualan/hapusbarang', 'PenjualanController@hapusBarang')->middleware('cek_login');
 Route::post('admin/penjualan/cekstok', 'PenjualanController@cekStok')->middleware('cek_login');
 
+// Log
+Route::get('admin/log', 'LogController@index')->middleware('cek_login');
+
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');
 // Menampilkan Logo UPN & Kata-kata
