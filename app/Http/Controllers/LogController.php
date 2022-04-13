@@ -13,13 +13,19 @@ class LogController extends Controller
         $cari = request('q');
         $entri = request('entri', 10);
 
-        if ($cari) {
-            $logUser = LogUser::where('menu', 'like', "%$cari%")->paginate($entri)->withQueryString();
-        } else {
-            $logUser = LogUser::paginate($entri)->withQueryString();
-        }
-        // dd($kategori);
-        //
+        $logUser = LogUser::select(
+            "log_user.id",
+            "user.nama as user",
+            "log_user.menu",
+            "log_user.keterangan",
+            "log_user.created_at",
+        )->join("user", "user.id", "=", "log_user.iduser")
+            ->when(!empty($cari), function ($query) use ($cari) {
+                return $query->where('menu', 'like', "%$cari%");
+            })
+            ->paginate($entri)
+            ->withQueryString();
+
         $queryParams = request()->all();
         $builtQuery = http_build_query($queryParams);
         // dd($builtQuery);
@@ -33,11 +39,16 @@ class LogController extends Controller
     public function previewPDF()
     {
         $cari = request('q');
-        if ($cari) {
-            $logUser = LogUser::where('menu', 'like', "%$cari%")->get();
-        } else {
-            $logUser = LogUser::all();
-        }
+
+        $logUser = LogUser::select(
+            "log_user.id",
+            "user.nama as user",
+            "log_user.menu",
+            "log_user.keterangan",
+            "log_user.created_at",
+        )->join("user", "user.id", "=", "log_user.iduser")
+            ->where('menu', 'like', "%$cari%")->get();
+
         return view('log.exportpdf', [
             'data' => $logUser,
         ]);
@@ -46,11 +57,16 @@ class LogController extends Controller
     public function exportPDF()
     {
         $cari = request('q');
-        if ($cari) {
-            $logUser = LogUser::where('menu', 'like', "%$cari%")->get();
-        } else {
-            $logUser = LogUser::all();
-        }
+
+        $logUser = LogUser::select(
+            "log_user.id",
+            "user.nama as user",
+            "log_user.menu",
+            "log_user.keterangan",
+            "log_user.created_at",
+        )->join("user", "user.id", "=", "log_user.iduser")
+            ->where('menu', 'like', "%$cari%")->get();
+
 
         $pdf = PDF::loadView('log.exportpdf', [
             'data' => $logUser,

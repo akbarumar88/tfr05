@@ -75,7 +75,7 @@ $offset = ($currentPage - 1) * $entri;
                     @foreach ($data as $i => $log)
                         <tr>
                             <th scope="row">{{ $offset + $i + 1 }}</th>
-                            <td>{{ $log['iduser'] }}</td>
+                            <td>{{ $log['user'] }}</td>
                             <td>{{ $log['menu'] }}</td>
                             <td>{{ $log['keterangan'] }}</td>
                             <td>{{ $log['created_at'] }}</td>

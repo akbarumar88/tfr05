@@ -18,7 +18,7 @@
             @foreach ($data as $i => $log)
                 <tr>
                     <td>{{ $i + 1 }}</td>
-                    <td>{{ $log['iduser'] }}</td>
+                    <td>{{ $log['user'] }}</td>
                     <td>{{ $log['menu'] }}</td>
                     <td>{{ $log['keterangan'] }}</td>
                     <td>{{ $log['created_at'] }}</td>
