@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\LogUser;
+use PDF;
 
 class LogController extends Controller
 {
@@ -27,5 +28,33 @@ class LogController extends Controller
             'data' => $logUser,
             'params' => $builtQuery // Passing query params saat ini
         ]);
+    }
+
+    public function previewPDF()
+    {
+        $cari = request('q');
+        if ($cari) {
+            $logUser = LogUser::where('menu', 'like', "%$cari%")->get();
+        } else {
+            $logUser = LogUser::all();
+        }
+        return view('log.exportpdf', [
+            'data' => $logUser,
+        ]);
+    }
+
+    public function exportPDF()
+    {
+        $cari = request('q');
+        if ($cari) {
+            $logUser = LogUser::where('menu', 'like', "%$cari%")->get();
+        } else {
+            $logUser = LogUser::all();
+        }
+
+        $pdf = PDF::loadView('log.exportpdf', [
+            'data' => $logUser,
+        ]);
+        return $pdf->stream();
     }
 }

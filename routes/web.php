@@ -73,6 +73,8 @@ Route::post('admin/penjualan/cekstok', 'PenjualanController@cekStok')->middlewar
 
 // Log
 Route::get('admin/log', 'LogController@index')->middleware('cek_login');
+Route::post('admin/log/exportpdf', 'LogController@exportPDF')->middleware('cek_login');
+Route::get('admin/log/previewpdf', 'LogController@previewPDF')->middleware('cek_login');
 
 // Sample Diagram
 Route::get('previewdiagram', 'AdminController@previewDiagram');

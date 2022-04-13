@@ -18,13 +18,13 @@ $offset = ($currentPage - 1) * $entri;
     {{-- {{dd($params)}} --}}
     <h3 class="mb-3">Log User</h3>
 
-    {{-- <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
-    <form action="{{ url('') }}/admin/kategori/exportpdf" class="d-inline" method="POST">
+    {{-- <a href="/admin/kategori/create" class="btn btn-success"><i class="fa fa-plus"></i> Tambah</a> --}}
+    <form action="{{ url('') }}/admin/log/exportpdf" class="d-inline" method="POST">
         @csrf
         <input type="hidden" name="q" value="{{request('q')}}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-print"></i> Export PDF</button>
     </form>
-    <form action="{{ url('') }}/admin/kategori/exportexcel" class="d-inline" method="POST">
+    {{-- <form action="{{ url('') }}/admin/kategori/exportexcel" class="d-inline" method="POST">
         @csrf
         <input type="hidden" name="q" value="{{request('q')}}">
         <button type="submit" class="btn btn-warning"><i class="fa fa-file-excel"></i> Export Excel</button>
